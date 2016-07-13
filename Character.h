@@ -51,8 +51,8 @@ public:
 
 protected:
     int health, strength, energy;
-    int energyMax = 100;
-    float speed = 0.5;
+    //int energyMax = 100;
+    float speed = 2;
 };
 
 #endif //PROJECTVIDEOGAME_CHARACTER_H
