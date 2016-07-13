@@ -5,23 +5,30 @@
       <sourceFolder url="file://$MODULE_DIR$/Potion.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MeleeWeapon.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Scroll.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TileMap.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RangedWeapon.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Mob.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/NPC.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Hero.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/NPC.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Mob.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/lib/googletest/src/gtest_main.cc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/lib/googletest/src/gtest-all.cc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/lib/googletest/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/lib/googletest/cmake/internal_utils.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/HeroTests.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/runAllTests.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TileMap.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Character.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Potion.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Weapon.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Character.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Armor.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Hero.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cmake_modules/FindSFML.cmake" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/NPC.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TileMap.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Weapon.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Mob.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TileMap.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cmake_modules/FindSFML.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RangedWeapon.h" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
