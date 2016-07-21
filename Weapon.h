@@ -41,6 +41,9 @@ public:
         Weapon::isMagic = isMagic;
     }
 
+    sf::RectangleShape rect;
+    sf::Sprite sprite;
+
 protected:
     int strength;
     bool isMagic, isPoisoned, isBurning;

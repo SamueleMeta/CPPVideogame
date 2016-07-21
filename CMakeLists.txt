@@ -5,7 +5,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 add_subdirectory(test)
 
 set(EXECUTABLE_NAME "MyGame")
-set(SOURCE_FILES Armor.h Character.cpp Character.h Hero.cpp Hero.h MeleeWeapon.h Weapon.h Mob.cpp Mob.h NPC.cpp NPC.h Potion.cpp Potion.h RangedWeapon.h Scroll.h TileMap.cpp TileMap.h)
+set(SOURCE_FILES Armor.h Character.cpp Character.h Hero.cpp Hero.h MeleeWeapon.h Weapon.h Mob.cpp Mob.h NPC.cpp NPC.h Potion.cpp Potion.h RangedWeapon.h Scroll.h TileMap.cpp TileMap.h Projectile.cpp Projectile.h)
 add_executable(${EXECUTABLE_NAME} main.cpp)
 
 add_library(core ${SOURCE_FILES})

@@ -45,6 +45,7 @@ public:
 private:
     int strikeD, slashD, thrustD;
     bool isDaedric;
+    int animationCounter = 0;
 };
 
 #endif //PROJECTVIDEOGAME_MELEEWEAPON_H

@@ -41,7 +41,7 @@ public:
         return speed;
     }
 
-    void setSpeed(int speed) {
+    void setSpeed(float speed) {
         Character::speed = speed;
     }
 
@@ -52,7 +52,7 @@ public:
 protected:
     int health, strength, energy;
     //int energyMax = 100;
-    float speed = 2;
+    float speed = 0.4;
 };
 
 #endif //PROJECTVIDEOGAME_CHARACTER_H
