@@ -66,6 +66,14 @@ public:
         Mob::isBoss = isBoss;
     }
 
+    bool isAlive() const {
+        return alive;
+    }
+
+    void setAlive(bool alive) {
+        Mob::alive = alive;
+    }
+
 private:
     Mob::EnemyType enemyType;
     float dropRate;
@@ -76,6 +84,7 @@ private:
     int counterWalking = 0;
     int direction = Up;
     int counter = 0;
+    bool alive = true;
 };
 
 #endif //PROJECTVIDEOGAME_MOB_H

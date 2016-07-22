@@ -25,6 +25,9 @@ int main() {
     sf::Vector2f position (screenDimension.x/2, screenDimension.y/2);
     sf::Vector2f viewSize = view.getSize();
 
+    // Clock
+    sf::Clock clock;
+
     // load player texture
     sf::Texture texturePlayer;
     if (!texturePlayer.loadFromFile("WandererMale.png")) {
@@ -138,14 +141,6 @@ int main() {
         {
             if(event.type == sf::Event::Closed)
                 window.close();
-            if(event.key.code == sf::Keyboard::Space){
-                projectile.rect.setPosition(hero.rect.getPosition().x + hero.rect.getSize().x/2 - projectile.rect.getSize().x/2,
-                                            hero.rect.getPosition().y + hero.rect.getSize().y/2 - projectile.rect.getSize().y/2);
-                projectile.setDirection(hero.getDirection());
-                projectileArray.push_back(projectile);
-                healthBar.setTextureRect(sf::IntRect(0, lifecounter * 20, 130, 20));
-                lifecounter++;
-            }
         }
 
 
@@ -165,6 +160,34 @@ int main() {
         window.setView(view);
 
         window.clear();
+
+        sf::Time elapsed = clock.getElapsedTime();
+
+        if(elapsed.asSeconds() >= 0.25) {
+            clock.restart();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                projectile.rect.setPosition(
+                        hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
+                        hero.rect.getPosition().y + hero.rect.getSize().y / 2 - projectile.rect.getSize().y / 2);
+                projectile.setDirection(hero.getDirection());
+                projectileArray.push_back(projectile);
+                healthBar.setTextureRect(sf::IntRect(0, lifecounter * 20, 130, 20));
+                lifecounter++;
+            }
+        }
+
+        int pcounter = 0;
+        for(auto itr = projectileArray.begin(); itr != projectileArray.end(); itr++){
+            int ecounter = 0;
+            for(auto itr2 = enemies.begin(); itr2 != enemies.end(); itr2++) {
+                if (projectileArray[pcounter].rect.getGlobalBounds().intersects(enemies[ecounter].rect.getGlobalBounds())) {
+                    enemies[ecounter].setAlive(false);
+                    projectileArray[pcounter].setDestroy(true);
+                }
+
+            }
+            pcounter++;
+        }
 
         // draw the map
         window.draw(mapBackground);
@@ -202,6 +225,27 @@ int main() {
             window.draw(enemies[enemyCounter].sprite);
             enemyCounter++;
         }
+
+        // Delete dead enemies
+        counter = 0;
+        for (auto itr = enemies.begin(); itr != enemies.end(); itr++) {
+            if (enemies[counter].isAlive() == false) {
+                enemies.erase(itr);
+                break;
+            }
+            counter++;
+        }
+
+        // Delete projectiles
+        counter = 0;
+        for (auto itr = projectileArray.begin(); itr != projectileArray.end(); itr++) {
+            if (projectileArray[counter].isDestroy() == true) {
+                projectileArray.erase(itr);
+                break;
+            }
+            counter++;
+        }
+
         window.display();
     }
 
