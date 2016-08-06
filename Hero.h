@@ -41,9 +41,17 @@ public:
 
     void moveSprite(const int* level);
 
-    bool collides(const int* level);
+    bool collidesUp(const int* level);
 
-    bool outOfbounds();
+    bool collidesDown(const int* level);
+
+    bool collidesLeft(const int* level);
+
+    bool collidesRight(const int* level);
+
+    bool checkCollision(int tile);
+
+    bool outOfbounds(Hero::Direction direction);
 
     Class getClassType() const {
         return classType;

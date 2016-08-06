@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "TileMap.h"
 #include "Hero.h"
 #include "Mob.h"
@@ -55,6 +56,23 @@ int main() {
     if (!textureHealthbar.loadFromFile("healthBar.png")) {
         return EXIT_FAILURE;
     }
+
+    // Load music
+    sf::Music music;
+    if (!music.openFromFile("music.ogg")) {
+        return EXIT_FAILURE;
+    }
+
+    // Play music
+    music.play();
+    music.setLoop(true);
+
+    // Sound effects
+    sf::SoundBuffer bufferShot;
+    if (!bufferShot.loadFromFile("shot.ogg"))
+        return -1;
+    sf::Sound soundShot;
+    soundShot.setBuffer(bufferShot);
 
     Hero hero(100, 100, 80, "Castoro", 0, 1000, 0, Hero::Elf, Hero::Warrior);
     hero.sprite.setTexture(texturePlayer);
@@ -173,6 +191,7 @@ int main() {
                 projectileArray.push_back(projectile);
                 healthBar.setTextureRect(sf::IntRect(0, lifecounter * 20, 130, 20));
                 lifecounter++;
+                soundShot.play();
             }
         }
 

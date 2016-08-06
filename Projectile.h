@@ -75,7 +75,7 @@ public:
     sf::Sprite sprite;
 
 private:
-    float movementSpeed = 0.7;
+    float movementSpeed = 5;
     int damage = 1;
     int lifeTime = 100;
     int direction = Up;
