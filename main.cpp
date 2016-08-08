@@ -223,7 +223,7 @@ int main() {
         int enemyCounter = 0;
         for(auto itr = enemies.begin(); itr != enemies.end(); itr++){
             enemies[enemyCounter].update();
-            enemies[enemyCounter].moveSprite();
+            enemies[enemyCounter].moveSprite(levelVisible);
             enemyCounter++;
         }
 

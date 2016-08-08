@@ -29,10 +29,21 @@ public:
 
     void update();
 
-    void moveSprite();
+    void moveSprite(const int* level);
 
     int generateRandom(int max);
 
+    bool collidesUp(const int* level);
+
+    bool collidesDown(const int* level);
+
+    bool collidesLeft(const int* level);
+
+    bool collidesRight(const int* level);
+
+    bool checkCollision(int tile);
+
+    bool outOfbounds(Mob::Direction direction);
 
     EnemyType getEnemyType() const {
         return enemyType;
@@ -82,7 +93,7 @@ private:
     float movementSpeed = 1;
     int movementLength = 100;
     int counterWalking = 0;
-    int direction = Up;
+    Mob::Direction direction = Up;
     int counter = 0;
     bool alive = true;
 };
