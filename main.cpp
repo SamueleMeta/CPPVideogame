@@ -26,8 +26,11 @@ int main() {
     sf::Vector2f position (screenDimension.x/2, screenDimension.y/2);
     sf::Vector2f viewSize = view.getSize();
 
-    // Clock
-    sf::Clock clock;
+    // Clock for projectiles
+    sf::Clock clockProjectile;
+
+    // Clock for angry enemies
+    sf::Clock clockAngry;
 
     // load player texture
     sf::Texture texturePlayer;
@@ -88,7 +91,7 @@ int main() {
 
     //Second enemy
     Mob assassin(40, 2, 9, Mob::Samurai, 0.5, 1, false);
-    assassin.rect.setPosition(300, 400);
+    assassin.rect.setPosition(300, 500);
     assassin.sprite.setTexture(textureAssassin);
     enemies.push_back(assassin);
 
@@ -179,10 +182,12 @@ int main() {
 
         window.clear();
 
-        sf::Time elapsed = clock.getElapsedTime();
+        sf::Time elapsedProjectile = clockProjectile.getElapsedTime();
 
-        if(elapsed.asSeconds() >= 0.25) {
-            clock.restart();
+        sf::Time elapsedAngry = clockAngry.getElapsedTime();
+
+        if(elapsedProjectile.asSeconds() >= 0.25) {
+            clockProjectile.restart();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
                 projectile.rect.setPosition(
                         hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
@@ -195,13 +200,132 @@ int main() {
             }
         }
 
+        // Angry enemies
+        int angryCounter = 0;
+        for (auto itr = enemies.begin(); itr != enemies.end(); itr++) {
+            if (enemies[angryCounter].isAngry() == true) {
+                if (elapsedAngry.asSeconds() >= 1) {
+                    clockAngry.restart();
+                    int randomNumber = rand();
+                    int tempRand = (randomNumber % 2) + 1;
+                    if (tempRand == 1) { // Fires and chases
+                        projectile.setDamage(enemies[angryCounter].getStrength());
+                        // Player to Right
+                        if ((hero.rect.getPosition().x < enemies[angryCounter].rect.getPosition().x) &&
+                                (abs(hero.rect.getPosition().y - enemies[angryCounter].rect.getPosition().y) <= 30))
+                        {
+                            soundShot.play();
+                            projectile.setHostile(true);
+                            projectile.setDirection(Character::Direction::Left);
+                            projectile.rect.setPosition(enemies[angryCounter].rect.getPosition().x +
+                                enemies[angryCounter].rect.getSize().x/2 - projectile.rect.getSize().x/2,
+                                     enemies[angryCounter].rect.getPosition().y + enemies[angryCounter].rect.getSize().y/2 -
+                                             projectile.rect.getSize().y/2);
+                            projectileArray.push_back(projectile);
+                            projectile.setHostile(false);
+
+                            enemies[angryCounter].setDirection(Character::Direction::Left);
+                        }
+
+                        // Player to Left
+                        if ((hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x) &&
+                                (abs(hero.rect.getPosition().y - enemies[angryCounter].rect.getPosition().y) <= 30))
+                        {
+                            soundShot.play();
+                            projectile.setHostile(true);
+                            projectile.setDirection(Character::Direction::Right);
+                            projectile.rect.setPosition(enemies[angryCounter].rect.getPosition().x +
+                                enemies[angryCounter].rect.getSize().x/2 - projectile.rect.getSize().x/2,
+                                     enemies[angryCounter].rect.getPosition().y + enemies[angryCounter].rect.getSize().y/2 -
+                                             projectile.rect.getSize().y/2);
+                            projectileArray.push_back(projectile);
+                            projectile.setHostile(false);
+
+                            enemies[angryCounter].setDirection(Character::Direction::Right);
+                        }
+
+                        // Player to Top
+                        if ((hero.rect.getPosition().y < enemies[angryCounter].rect.getPosition().y) &&
+                                (abs(hero.rect.getPosition().x - enemies[angryCounter].rect.getPosition().x) <= 30))
+                        {
+                            soundShot.play();
+                            projectile.setHostile(true);
+                            projectile.setDirection(Character::Direction::Up);
+                            projectile.rect.setPosition(enemies[angryCounter].rect.getPosition().x +
+                                 enemies[angryCounter].rect.getSize().x/2 - projectile.rect.getSize().x/2,
+                                      enemies[angryCounter].rect.getPosition().y + enemies[angryCounter].rect.getSize().y/2 -
+                                              projectile.rect.getSize().y/2);
+                            projectileArray.push_back(projectile);
+                            projectile.setHostile(false);
+
+                            enemies[angryCounter].setDirection(Character::Direction::Up);
+                        }
+
+                        // Player to Bottom
+                        if ((hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y) &&
+                                (abs(hero.rect.getPosition().x - enemies[angryCounter].rect.getPosition().x) <= 30))
+                        {
+                            soundShot.play();
+                            projectile.setHostile(true);
+                            projectile.setDirection(Character::Direction::Down);
+                            projectile.rect.setPosition(enemies[angryCounter].rect.getPosition().x +
+                                 enemies[angryCounter].rect.getSize().x/2 - projectile.rect.getSize().x/2,
+                                       enemies[angryCounter].rect.getPosition().y + enemies[angryCounter].rect.getSize().y/2 -
+                                               projectile.rect.getSize().y/2);
+                            projectileArray.push_back(projectile);
+                            projectile.setHostile(false);
+
+                            enemies[angryCounter].setDirection(Character::Direction::Down);
+                        }
+                    }
+                    else if (tempRand == 2) { // Enemy Chases Player
+                        if (hero.rect.getPosition().y < enemies[angryCounter].rect.getPosition().y) {
+                            enemies[angryCounter].setDirection(Character::Direction::Up);
+                        }
+                        else if (hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x) {
+                            enemies[angryCounter].setDirection(Character::Direction::Right);
+                        }
+                        else if (hero.rect.getPosition().x < enemies[angryCounter].rect.getPosition().x) {
+                            enemies[angryCounter].setDirection(Character::Direction::Left);
+                        }
+                        else if (hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y) {
+                            enemies[angryCounter].setDirection(Character::Direction::Down);
+                        }
+                    }
+                    else // Enemy Chases Player
+                    {
+                        if (hero.rect.getPosition().x < enemies[angryCounter].rect.getPosition().x)
+                        {
+                            enemies[angryCounter].setDirection(Character::Direction::Left);
+                        }
+                        else if (hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x)
+                        {
+                            enemies[angryCounter].setDirection(Character::Direction::Right);
+                        }
+                        else if (hero.rect.getPosition().y < enemies[angryCounter].rect.getPosition().y)
+                        {
+                            enemies[angryCounter].setDirection(Character::Direction::Up);
+                        }
+                        else if (hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y)
+                        {
+                            enemies[angryCounter].setDirection(Character::Direction::Down);
+                        }
+                    }
+
+                }
+            }
+
+            angryCounter++;
+        }
+
         int pcounter = 0;
         for(auto itr = projectileArray.begin(); itr != projectileArray.end(); itr++){
             int ecounter = 0;
             for(auto itr2 = enemies.begin(); itr2 != enemies.end(); itr2++) {
-                if (projectileArray[pcounter].rect.getGlobalBounds().intersects(enemies[ecounter].rect.getGlobalBounds())) {
-                    enemies[ecounter].setAlive(false);
-                    projectileArray[pcounter].setDestroy(true);
+                if (projectileArray[pcounter].rect.getGlobalBounds().intersects(enemies[ecounter].rect.getGlobalBounds()) &&
+                        projectileArray[pcounter].isHostile() == false) {
+                        enemies[ecounter].setAlive(false);
+                        projectileArray[pcounter].setDestroy(true);
                 }
 
             }

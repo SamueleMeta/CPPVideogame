@@ -8,49 +8,49 @@ void Hero::update() {
 void Hero::moveSprite(const int* level) {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        if (collidesUp(level) || outOfbounds(Up)) {
+        if (collidesUp(level) || outOfbounds(Direction::Up)) {
             sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
-            direction = Up;
+            direction = Direction::Up;
         } else {
             rect.move(0, -speed);
             sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
-            direction = Up;
+            direction = Direction::Up;
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-        if (collidesDown(level) || outOfbounds(Down)) {
+        if (collidesDown(level) || outOfbounds(Direction::Down)) {
             sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
-            direction = Down;
+            direction = Direction::Down;
         }
         else {
             rect.move(0, speed);
             sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
-            direction = Down;
+            direction = Direction::Down;
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-        if(collidesLeft(level) || outOfbounds(Left)) {
+        if(collidesLeft(level) || outOfbounds(Direction::Left)) {
             sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
-            direction = Left;
+            direction = Direction::Left;
         }
         else {
             rect.move(-speed, 0);
             sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
-            direction = Left;
+            direction = Direction::Left;
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-        if(collidesRight(level) || outOfbounds(Right)) {
+        if(collidesRight(level) || outOfbounds(Direction::Right)) {
             sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
-            direction = Right;
+            direction = Direction::Right;
         }
         else {
             rect.move(speed, 0);
             sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
-            direction = Right;
+            direction = Direction::Right;
         }
     }
 
@@ -61,21 +61,21 @@ void Hero::moveSprite(const int* level) {
     }
 }
 
-bool Hero::outOfbounds(Hero::Direction direction) {
+bool Hero::outOfbounds(Direction direction) {
     switch (direction) {
-        case Up:
+        case Direction::Up:
             if (static_cast<int>(rect.getPosition().y - speed) < 0)
                 return true;
             return false;
-        case Down:
+        case Direction::Down:
             if (static_cast<int>(rect.getPosition().y + rect.getSize().y + speed) > 624)
                 return true;
             return false;
-        case Left:
+        case Direction::Left:
             if (static_cast<int>(rect.getPosition().x - speed) < 0)
                 return true;
             return false;
-        case Right:
+        case Direction::Right:
             if (static_cast<int>(rect.getPosition().x + rect.getSize().x + speed) > 912)
                 return true;
             return false;

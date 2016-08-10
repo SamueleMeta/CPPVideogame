@@ -6,48 +6,46 @@ void Mob::update() {
 
 void Mob::moveSprite(const int* level) {
     switch(direction) {
-        case Up:
-            if(collidesUp(level) || outOfbounds(Up)) {
-                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * Up, 48, 48));
+        case Direction::Up:
+            if(collidesUp(level) || outOfbounds(Direction::Up)) {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
                 direction = static_cast<Mob::Direction>(generateRandom(4));
                 break;
             } else {
                 rect.move(0,-movementSpeed);
-                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * Up, 48, 48));
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
                 break;
             }
-        case Down:
-            if(collidesDown(level) || outOfbounds(Down)) {
-                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * Down, 48, 48));
+        case Direction::Down:
+            if(collidesDown(level) || outOfbounds(Direction::Down)) {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
                 direction = static_cast<Mob::Direction>(generateRandom(4));
                 break;
             } else {
                 rect.move(0,movementSpeed);
-                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * Down, 48, 48));
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
                 break;
             }
-        case Left:
-            if(collidesLeft(level) || outOfbounds(Left)) {
-                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * Left, 48, 48));
+        case Direction::Left:
+            if(collidesLeft(level) || outOfbounds(Direction::Left)) {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
                 direction = static_cast<Mob::Direction>(generateRandom(4));
                 break;
             } else {
                 rect.move(-movementSpeed,0);
-                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * Left, 48, 48));
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
                 break;
             }
-        case Right:
-            if(collidesRight(level) || outOfbounds(Right)) {
-                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * Right, 48, 48));
+        case Direction::Right:
+            if(collidesRight(level) || outOfbounds(Direction::Right)) {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
                 direction = static_cast<Mob::Direction>(generateRandom(4));
                 break;
             } else {
                 rect.move(movementSpeed,0);
-                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * Right, 48, 48));
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
                 break;
             }
-        default:
-            break;
     }
 
     counterWalking++;
@@ -56,10 +54,12 @@ void Mob::moveSprite(const int* level) {
         counterWalking = 0;
     }
 
-    counter++;
-    if (counter >= movementLength){
-        direction = static_cast<Mob::Direction>(generateRandom(6));
-        counter = 0;
+    if(!isAngry()) {
+        counter++;
+        if (counter >= movementLength){
+            direction = static_cast<Direction>(generateRandom(6));
+            counter = 0;
+        }
     }
 }
 
@@ -69,21 +69,21 @@ int Mob::generateRandom(int max) {
     return random;
 }
 
-bool Mob::outOfbounds(Mob::Direction direction) {
+bool Mob::outOfbounds(Direction direction) {
     switch (direction) {
-        case Up:
+        case Direction::Up:
             if (static_cast<int>(rect.getPosition().y - movementSpeed) < 0)
                 return true;
             return false;
-        case Down:
+        case Direction::Down:
             if (static_cast<int>(rect.getPosition().y + rect.getSize().y + movementSpeed) > 624)
                 return true;
             return false;
-        case Left:
+        case Direction::Left:
             if (static_cast<int>(rect.getPosition().x - movementSpeed) < 0)
                 return true;
             return false;
-        case Right:
+        case Direction::Right:
             if (static_cast<int>(rect.getPosition().x + rect.getSize().x + movementSpeed) > 912)
                 return true;
             return false;

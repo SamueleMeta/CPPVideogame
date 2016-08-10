@@ -2,17 +2,13 @@
 #define PROJECTVIDEOGAME_PROJECTILE_H
 
 #include <SFML/Graphics.hpp>
+#include "Character.h"
 
 class Projectile {
 public:
-    enum Direction {Down, Left, Right, Up};
 
     Projectile();
     void update();
-
-    Direction getUp() const {
-        return Up;
-    }
 
     float getMovementSpeed() const {
         return movementSpeed;
@@ -36,14 +32,6 @@ public:
 
     void setLifeTime(int lifeTime) {
         Projectile::lifeTime = lifeTime;
-    }
-
-    int getDirection() const {
-        return direction;
-    }
-
-    void setDirection(int direction) {
-        Projectile::direction = direction;
     }
 
     int getCounterLifetime() const {
@@ -71,17 +59,35 @@ public:
     }
 
 
+    bool isHostile() const {
+        return hostile;
+    }
+
+    void setHostile(bool hostile) {
+        Projectile::hostile = hostile;
+    }
+
+
+    Character::Direction getDirection() const {
+        return direction;
+    }
+
+    void setDirection(Character::Direction direction) {
+        Projectile::direction = direction;
+    }
+
     sf::RectangleShape rect;
     sf::Sprite sprite;
 
 private:
-    float movementSpeed = 5;
+    float movementSpeed = 7;
     int damage = 1;
     int lifeTime = 100;
-    int direction = Up;
+    Character::Direction direction;
     int counterLifetime = 0;
     int counterAnimation = 0;
     bool destroy = false;
+    bool hostile = false;
 };
 
 #endif //PROJECTVIDEOGAME_PROJECTILE_H

@@ -6,8 +6,6 @@
 
 class Mob : public Character {
 public:
-    enum Direction { Down, Left, Right, Up};
-
     enum EnemyType {Ogre, Orc, Willowisp, Succubus, Soldier, Skeleton, Undead, Samurai, Demon, Spirit, Abomination, Dragon};
 
     Mob(int lPoints, int strgth, int energy, Mob::EnemyType t, float drop, int lvl, bool boss) :
@@ -43,7 +41,7 @@ public:
 
     bool checkCollision(int tile);
 
-    bool outOfbounds(Mob::Direction direction);
+    bool outOfbounds(Direction direction);
 
     EnemyType getEnemyType() const {
         return enemyType;
@@ -85,6 +83,23 @@ public:
         Mob::alive = alive;
     }
 
+    bool isAngry() const {
+        return angry;
+    }
+
+    void setAngry(bool angry) {
+        Mob::angry = angry;
+    }
+
+
+    Direction getDirection() const {
+        return direction;
+    }
+
+    void setDirection(Direction direction) {
+        Mob::direction = direction;
+    }
+
 private:
     Mob::EnemyType enemyType;
     float dropRate;
@@ -93,9 +108,10 @@ private:
     float movementSpeed = 1;
     int movementLength = 100;
     int counterWalking = 0;
-    Mob::Direction direction = Up;
+    Direction direction;
     int counter = 0;
     bool alive = true;
+    bool angry = true;
 };
 
 #endif //PROJECTVIDEOGAME_MOB_H

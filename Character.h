@@ -9,6 +9,9 @@
 
 class Character {
 public:
+
+    enum class Direction { Up, Down, Left, Right };
+
     Character(int lifePoints, int strgth, int energy) : health(lifePoints), strength(strgth), energy(energy){};
 
     virtual ~Character() {}
@@ -52,7 +55,7 @@ public:
 protected:
     int health, strength, energy;
     //int energyMax = 100;
-    float speed = 1;
+    float speed = 2;
 };
 
 #endif //PROJECTVIDEOGAME_CHARACTER_H

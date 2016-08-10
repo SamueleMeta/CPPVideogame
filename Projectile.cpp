@@ -9,19 +9,19 @@ Projectile::Projectile() {
 
 void Projectile::update()
 {
-    if (direction == Up) {
+    if (direction == Character::Direction::Up) {
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterAnimation * 32, 3 * 32, 32, 32));
     }
-    if (direction == Down) {
+    if (direction == Character::Direction::Down) {
         rect.move(0, movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterAnimation * 32, 0, 32, 32));
     }
-    if (direction == Left) {
+    if (direction == Character::Direction::Left) {
         rect.move(-movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterAnimation * 32, 1 * 32, 32, 32));
     }
-    if (direction == Right) {
+    if (direction == Character::Direction::Right) {
         rect.move(movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterAnimation * 32, 2 * 32, 32, 32));
     }

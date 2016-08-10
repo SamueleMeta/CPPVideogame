@@ -6,9 +6,6 @@
 
 class Hero : public Character {
 public:
-    enum Direction {
-        Down, Left, Right, Up
-    };
     enum Race {
         Human, Elf, Dwarf
     };
@@ -51,7 +48,7 @@ public:
 
     bool checkCollision(int tile);
 
-    bool outOfbounds(Hero::Direction direction);
+    bool outOfbounds(Direction direction);
 
     Class getClassType() const {
         return classType;
@@ -101,7 +98,6 @@ public:
         Hero::race = race;
     }
 
-
     Direction getDirection() const {
         return direction;
     }
@@ -116,7 +112,7 @@ private:
     Hero::Race race;
     Hero::Class classType;
     int counterWalking;
-    Hero::Direction direction;
+    Direction direction;
 
 
 };
