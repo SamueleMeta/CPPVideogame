@@ -7,50 +7,131 @@ void Hero::update() {
 
 void Hero::moveSprite(const int* level) {
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         if (collidesUp(level) || outOfbounds(Direction::Up)) {
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
-            direction = Direction::Up;
-        } else {
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                sprite.setTextureRect(sf::IntRect(48, 48*0, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                sprite.setTextureRect(sf::IntRect(48, 48*1, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                sprite.setTextureRect(sf::IntRect(48, 48*2, 48, 48));
+            }
+            else {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
+            }
+        }
+        else {
             rect.move(0, -speed);
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
-            direction = Direction::Up;
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*0, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*1, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*2, 48, 48));
+            }
+            else {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
+            }
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         if (collidesDown(level) || outOfbounds(Direction::Down)) {
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
-            direction = Direction::Down;
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                sprite.setTextureRect(sf::IntRect(48, 48*3, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                sprite.setTextureRect(sf::IntRect(48, 48*1, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                sprite.setTextureRect(sf::IntRect(48, 48*2, 48, 48));
+            }
+            else {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
+            }
         }
         else {
             rect.move(0, speed);
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
-            direction = Direction::Down;
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*3, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*1, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*2, 48, 48));
+            }
+            else {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
+            }
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
         if(collidesLeft(level) || outOfbounds(Direction::Left)) {
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
-            direction = Direction::Left;
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                sprite.setTextureRect(sf::IntRect(counterWalking, 48*3, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                sprite.setTextureRect(sf::IntRect(counterWalking, 48*0, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                sprite.setTextureRect(sf::IntRect(counterWalking, 48*2, 48, 48));
+            }
+            else {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
+            }
         }
         else {
             rect.move(-speed, 0);
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
-            direction = Direction::Left;
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*3, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*0, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*2, 48, 48));
+            }
+            else {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
+            }
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         if(collidesRight(level) || outOfbounds(Direction::Right)) {
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
-            direction = Direction::Right;
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                sprite.setTextureRect(sf::IntRect(counterWalking, 48*3, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                sprite.setTextureRect(sf::IntRect(counterWalking, 48*0, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                sprite.setTextureRect(sf::IntRect(counterWalking, 48*1, 48, 48));
+            }
+            else {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
+            }
         }
         else {
             rect.move(speed, 0);
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
-            direction = Direction::Right;
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*3, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*0, 48, 48));
+            }
+            else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48*1, 48, 48));
+            }
+            else {
+                sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
+            }
         }
     }
 

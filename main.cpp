@@ -188,15 +188,65 @@ int main() {
 
         if(elapsedProjectile.asSeconds() >= 0.25) {
             clockProjectile.restart();
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                projectile.rect.setPosition(
-                        hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
-                        hero.rect.getPosition().y + hero.rect.getSize().y / 2 - projectile.rect.getSize().y / 2);
-                projectile.setDirection(hero.getDirection());
-                projectileArray.push_back(projectile);
-                healthBar.setTextureRect(sf::IntRect(0, lifecounter * 20, 130, 20));
-                lifecounter++;
-                soundShot.play();
+
+            int shot =0;
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                shot = 1;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                shot = 2;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                shot = 3;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                shot = 4;
+            }
+            switch (shot) {
+                case (1) :
+                    projectile.rect.setPosition(
+                            hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
+                            hero.rect.getPosition().y + hero.rect.getSize().y / 2 - projectile.rect.getSize().y / 2);
+                    projectile.setDirection(Character::Direction::Up);
+                    projectileArray.push_back(projectile);
+                    //healthBar.setTextureRect(sf::IntRect(0, lifecounter * 20, 130, 20));
+                    lifecounter++;
+                    soundShot.play();
+                    break;
+                case (2) :
+                    projectile.rect.setPosition(
+                            hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
+                            hero.rect.getPosition().y + hero.rect.getSize().y / 2 - projectile.rect.getSize().y / 2);
+                    projectile.setDirection(Character::Direction::Down);
+                    projectileArray.push_back(projectile);
+                    //healthBar.setTextureRect(sf::IntRect(0, lifecounter * 20, 130, 20));
+                    lifecounter++;
+                    soundShot.play();
+                    break;
+                case (3) :
+                    projectile.rect.setPosition(
+                            hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
+                            hero.rect.getPosition().y + hero.rect.getSize().y / 2 - projectile.rect.getSize().y / 2);
+                    projectile.setDirection(Character::Direction::Left);
+                    projectileArray.push_back(projectile);
+                    //healthBar.setTextureRect(sf::IntRect(0, lifecounter * 20, 130, 20));
+                    lifecounter++;
+                    soundShot.play();
+                    break;
+                case (4) :
+                    projectile.rect.setPosition(
+                            hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
+                            hero.rect.getPosition().y + hero.rect.getSize().y / 2 - projectile.rect.getSize().y / 2);
+                    projectile.setDirection(Character::Direction::Right);
+                    projectileArray.push_back(projectile);
+                    //healthBar.setTextureRect(sf::IntRect(0, lifecounter * 20, 130, 20));
+                    lifecounter++;
+                    soundShot.play();
+                    break;
+
+                default:
+                    break;
             }
         }
 
