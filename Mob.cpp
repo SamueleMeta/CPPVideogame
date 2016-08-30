@@ -9,7 +9,7 @@ void Mob::moveSprite(const int* level) {
         case Direction::Up:
             if(collidesUp(level) || outOfbounds(Direction::Up)) {
                 sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
-                direction = static_cast<Mob::Direction>(generateRandom(4));
+                direction = static_cast<Direction>(generateRandom(4));
                 break;
             } else {
                 rect.move(0,-movementSpeed);
@@ -19,7 +19,7 @@ void Mob::moveSprite(const int* level) {
         case Direction::Down:
             if(collidesDown(level) || outOfbounds(Direction::Down)) {
                 sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
-                direction = static_cast<Mob::Direction>(generateRandom(4));
+                direction = static_cast<Direction>(generateRandom(4));
                 break;
             } else {
                 rect.move(0,movementSpeed);
@@ -29,7 +29,7 @@ void Mob::moveSprite(const int* level) {
         case Direction::Left:
             if(collidesLeft(level) || outOfbounds(Direction::Left)) {
                 sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
-                direction = static_cast<Mob::Direction>(generateRandom(4));
+                direction = static_cast<Direction>(generateRandom(4));
                 break;
             } else {
                 rect.move(-movementSpeed,0);
@@ -39,7 +39,7 @@ void Mob::moveSprite(const int* level) {
         case Direction::Right:
             if(collidesRight(level) || outOfbounds(Direction::Right)) {
                 sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
-                direction = static_cast<Mob::Direction>(generateRandom(4));
+                direction = static_cast<Direction>(generateRandom(4));
                 break;
             } else {
                 rect.move(movementSpeed,0);

@@ -107,8 +107,6 @@ private:
     bool isBoss;
     float movementSpeed = 1;
     int movementLength = 100;
-    int counterWalking = 0;
-    Direction direction;
     int counter = 0;
     bool alive = true;
     bool angry = true;

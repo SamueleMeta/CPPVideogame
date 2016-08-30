@@ -9,9 +9,30 @@ public:
     enum NPCType {Channeler, Healer, Wanderer, Blacksmith, Merchant, Animal};
 
     NPC(int lPoints, int strgth, int energy, NPC::NPCType t, std::string name, int mon, bool host) :
-            Character(lPoints, strgth, energy), npcType(t), name(name), money(mon), hostile(host) {}
+            Character(lPoints, strgth, energy), npcType(t), name(name), money(mon), hostile(host) {
+        rect.setSize(sf::Vector2f(48, 48));
+        sprite.setTextureRect(sf::IntRect(counterWalking * 48, 0, 48, 48));
+    }
 
     ~NPC() {}
+
+    void update();
+
+    void moveSprite(const int* level);
+
+    int generateRandom(int max);
+
+    bool collidesUp(const int* level);
+
+    bool collidesDown(const int* level);
+
+    bool collidesLeft(const int* level);
+
+    bool collidesRight(const int* level);
+
+    bool checkCollision(int tile);
+
+    bool outOfbounds(Direction direction);
 
     const std::string &getName() const {
         return name;
@@ -50,6 +71,8 @@ private:
     std::string name;
     int money;
     bool hostile;
+    int counter;
+    int movementLength = 150;
 };
 
 #endif //PROJECTVIDEOGAME_NPC_H

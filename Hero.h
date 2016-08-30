@@ -2,26 +2,23 @@
 #define PROJECTVIDEOGAME_HERO_H
 
 #include <string>
+#include <list>
+#include "Subject.h"
 #include "Character.h"
 
-class Hero : public Character {
+class Hero : public Character, public Subject {
 public:
-    enum Race {
-        Human, Elf, Dwarf
-    };
-    enum Class {
-        Paladin, Bandit, Mage, Thief, Hunter, Sorcerer, Knight, Warrior
-    };
 
-
-    Hero(int lifeP, int strngth, int energy, std::string name, int mon, int lvl, int exp, Hero::Race r, Hero::Class c) :
-            Character(lifeP, strngth, energy), name(name), money(mon), heroLevel(lvl), exp(exp), race(r), classType(c) {
-        rect.setSize(sf::Vector2f(48, 48));
+    Hero(int lifeP, int strngth, int energy, std::string name, int mon, int lvl, int exp) :
+            Character(lifeP, strngth, energy), name(name), money(mon), heroLevel(lvl), exp(exp) {
+        rect.setSize(sf::Vector2f(64, 64));
         rect.setPosition(0, 0);
-        sprite.setTextureRect(sf::IntRect(counterWalking * 48, 0, 48, 48));
+        sprite.setTextureRect(sf::IntRect(counterWalking * 64, 0, 64, 64));
     }
 
     ~Hero() { }
+
+    void useWeapon(sf::RenderWindow& window);
 
     /*
     int levelUp();
@@ -48,15 +45,13 @@ public:
 
     bool checkCollision(int tile);
 
+    virtual void subscribe(Observer* o) override;
+    virtual void unsubscribe(Observer* o) override;
+    virtual void notify(sf::Sprite& heartsSprite) override;
+
+
     bool outOfbounds(Direction direction);
 
-    Class getClassType() const {
-        return classType;
-    }
-
-    void setClassType(Class classType) {
-        Hero::classType = classType;
-    }
 
     int getMoney() const {
         return money;
@@ -90,14 +85,6 @@ public:
         Hero::exp = exp;
     }
 
-    Race getRace() const {
-        return race;
-    }
-
-    void setRace(Race race) {
-        Hero::race = race;
-    }
-
     Direction getDirection() const {
         return direction;
     }
@@ -106,15 +93,21 @@ public:
         Hero::direction = direction;
     }
 
+
+    bool isHasSword() const {
+        return hasSword;
+    }
+
+    void setHasSword(bool hasSword) {
+        Hero::hasSword = hasSword;
+    }
+
 private:
     std::string name;
     int money, heroLevel, exp;
-    Hero::Race race;
-    Hero::Class classType;
-    int counterWalking;
-    Direction direction;
-
-
+    bool hasSword = false;
+    int maxCounter = 2;
+    std::list <Observer*> observers;
 };
 
 #endif //PROJECTVIDEOGAME_HERO_H

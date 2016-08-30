@@ -6,57 +6,61 @@ void Hero::update() {
 }
 
 void Hero::moveSprite(const int* level) {
+    int adder = 0;
+    if(hasSword == true) {
+        adder = 192;
+    }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         if (collidesUp(level) || outOfbounds(Direction::Up)) {
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
+            sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 9, 64, 64));
             direction = Direction::Up;
         } else {
             rect.move(0, -speed);
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 3, 48, 48));
+            sprite.setTextureRect(sf::IntRect(adder +counterWalking * 64, 64 * 9, 64, 64));
             direction = Direction::Up;
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
         if (collidesDown(level) || outOfbounds(Direction::Down)) {
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
+            sprite.setTextureRect(sf::IntRect(adder +counterWalking * 64, 64 * 0, 64, 64));
             direction = Direction::Down;
         }
         else {
             rect.move(0, speed);
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 0, 48, 48));
+            sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 0, 64, 64));
             direction = Direction::Down;
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
         if(collidesLeft(level) || outOfbounds(Direction::Left)) {
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
+            sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 3, 64, 64));
             direction = Direction::Left;
         }
         else {
             rect.move(-speed, 0);
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 1, 48, 48));
+            sprite.setTextureRect(sf::IntRect(adder +counterWalking * 64, 64 * 3, 64, 64));
             direction = Direction::Left;
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
         if(collidesRight(level) || outOfbounds(Direction::Right)) {
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
+            sprite.setTextureRect(sf::IntRect(adder +counterWalking * 64, 64 * 6, 64, 64));
             direction = Direction::Right;
         }
         else {
             rect.move(speed, 0);
-            sprite.setTextureRect(sf::IntRect(counterWalking * 48, 48 * 2, 48, 48));
+            sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 6, 64, 64));
             direction = Direction::Right;
         }
     }
 
     counterWalking++;
 
-    if (counterWalking == 2){
+    if (counterWalking == maxCounter){
         counterWalking = 0;
     }
 }
@@ -125,4 +129,43 @@ bool Hero::checkCollision(int tile) {
         default:
             return false;
     }
+}
+
+void Hero::useWeapon(sf::RenderWindow& window) {
+    if (direction == Direction::Up) {
+        sprite.setTextureRect(sf::IntRect(192, 576 + 64 * counterSword, 64, 64));
+    }
+
+    if (direction == Direction::Down) {
+        sprite.setTextureRect(sf::IntRect(192, 64, 64, 64));
+    }
+
+    if (direction == Direction::Left) {
+        sprite.setTextureRect(sf::IntRect(192, 256, 64, 64));
+        sprite.setTextureRect(sf::IntRect(192, 320, 64, 64));
+    }
+
+    if (direction == Direction::Right) {
+        sprite.setTextureRect(sf::IntRect(192, 448, 64, 64));
+        sprite.setTextureRect(sf::IntRect(192, 512, 64, 64));
+    }
+
+    counterSword++;
+
+    if (counterSword == maxCounter){
+        counterSword = 0;
+    }
+}
+
+void Hero::subscribe(Observer *o) {
+    observers.push_back(o);
+}
+
+void Hero::unsubscribe(Observer *o) {
+    observers.remove(o);
+}
+
+void Hero::notify(sf::Sprite& Sprite) {
+    for(auto itr = std::begin(observers); itr != std::end(observers); itr++)
+        (*itr)->update(health, exp, money, Sprite);
 }

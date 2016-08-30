@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "Potion.h"
-#include "Armor.h"
 #include "Weapon.h"
 #include "Scroll.h"
 
@@ -53,9 +52,13 @@ public:
     sf::Text text;
 
 protected:
-    int health, strength, energy;
+    int health = 8;
+    int strength, energy;
     //int energyMax = 100;
     float speed = 2;
+    int counterWalking = 0;
+    Direction direction = Direction::Down;
+    int counterSword = 0;
 };
 
 #endif //PROJECTVIDEOGAME_CHARACTER_H
