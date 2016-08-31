@@ -490,7 +490,7 @@ int main() {
             }
 
 
-            window.setView(window.getDefaultView());
+
 
             hero.update();
             hero.moveSprite(levelVisible);
@@ -505,6 +505,21 @@ int main() {
                     projectileArray.push_back(projectile);
                     soundShot.play();
                 }
+            }
+
+            // Check projectile-enemy collision
+            int pcounter = 0;
+            for(auto itr = projectileArray.begin(); itr != projectileArray.end(); itr++){
+                int ecounter = 0;
+                for(auto itr2 = enemies.begin(); itr2 != enemies.end(); itr2++) {
+                    if (projectileArray[pcounter].rect.getGlobalBounds().intersects(enemies[ecounter].rect.getGlobalBounds()) &&
+                        projectileArray[pcounter].isHostile() == false) {
+                        enemies[ecounter].setAlive(false);
+                        projectileArray[pcounter].setDestroy(true);
+                    }
+
+                }
+                pcounter++;
             }
 
             // Update enemies
@@ -536,6 +551,8 @@ int main() {
             window.draw(enemies[enemyCounter].sprite);
             enemyCounter++;
         }
+
+
 
         // Draw NPC
         window.draw(sheep.sprite);
