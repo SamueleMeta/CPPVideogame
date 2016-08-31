@@ -21,10 +21,8 @@ int main() {
 
     Settings settings;
 
-    const int lakeSX = 3;
-    const int lake = 4;
-    const int lakeDX = 5;
-    const int transp = 8;
+    const int neve = 1298;
+    const int trsp = 1300;
     bool isAnimating = false;
     bool startAnimation = false;
     bool halfAnimation = false;
@@ -139,7 +137,7 @@ int main() {
 
     // Load music
     sf::Music music;
-    if (!music.openFromFile("music.ogg")) {
+    if (!music.openFromFile("Elite4Cut.ogg")) {
         return EXIT_FAILURE;
     }
 
@@ -232,20 +230,32 @@ int main() {
     // Define the level with an array of tile indices
     const int levelBackground[] =
             {
-                    1340, 1340, lake, lake, lake, lake, lake, lake, lake, lake, lake, lake, lake, lake, lake, lake,
-                    lake, lake, lakeDX,
-                    8, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
-                    8, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
-                    8, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 0, 0, 0, 0, 0, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 0, 0, 0, 0, 0, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
+                    neve, neve, neve, neve, neve, 939, 940, 941, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve,
+                    neve, neve, neve, neve, neve, 945, 943, 946, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve,
+                    neve, neve, neve, neve, neve, 942, 943, 944, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
+                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
+                    neve, neve, neve,
             };
 
     // create the tilemap from the level definition
@@ -255,20 +265,30 @@ int main() {
 
     const int levelVisible[] =
             {
-                    1340, 1340, transp, transp, transp, transp, transp, transp, transp, transp, transp, transp,
-                    transp, transp, transp, transp, transp, transp, transp,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 11, 12, 23, 23, 23, 23, 6, 23, 23, 23,
-                    23, 23, 6, 23, 23, 10, 23, 23, 23, 13, 14, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 9, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 10, 23, 23, 6, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 9, 23, 23, 23, 23,
-                    23, 23, 11, 12, 0, 0, 0, 0, 0, 0, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 13, 14, 0, 0, 0, 0, 0, 0, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 10, 10, 10, 23, 23,
-                    23, 23, 23, 6, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 9, 9, 9, 23, 23,
-                    23, 23, 23, 23, 23, 23, 23, 23, 23, 1, 2, 23, 23, 23, 23, 23, 23, 23, 23,
+                    829, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 831,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, 1172, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1103, 1103,
+                    trsp, 1180, 1181,
+                    trsp, trsp, trsp, trsp, trsp, trsp, 1212, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1103, 1103,
+                    trsp, 1220, 1221,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, 1182, 1183,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, 1222, 1223,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, 1184, 1185,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, 1331, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1102,
+                    trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
+                    995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995,
             };
 
     // create the tilemap from the level definition
@@ -329,23 +349,30 @@ int main() {
         int enemyCounter = 0;
 
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             hero.setHasSword(true);
             startAnimation = true;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-            gameState = Pause;
+            if (gameState == Playing) {
+                gameState = Pause;
+            } else if (gameState == Pause) {
+                gameState = Playing;
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-            hero.setHealth(hero.getHealth()-1);
+            hero.setHealth(hero.getHealth() - 1);
+            if (hero.getHealth() < 1) {
+                hero.setHealth(8);
+            }
             hero.notify(heartsSprite);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-            hero.setExp(hero.getExp()+1);
-            if(hero.getExp() > 19) {
+            hero.setExp(hero.getExp() + 1);
+            if (hero.getExp() > 19) {
                 hero.setExp(0);
             }
             hero.notify(expSprite);
@@ -453,32 +480,24 @@ int main() {
 
                                 enemies[angryCounter].setDirection(Character::Direction::Down);
                             }
-                        }
-                        else if (tempRand == 2) { // Enemy Chases Player
+                        } else if (tempRand == 2) { // Enemy Chases Player
                             if (hero.rect.getPosition().y < enemies[angryCounter].rect.getPosition().y) {
                                 enemies[angryCounter].setDirection(Character::Direction::Up);
-                            }
-                            else if (hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x) {
+                            } else if (hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x) {
                                 enemies[angryCounter].setDirection(Character::Direction::Right);
-                            }
-                            else if (hero.rect.getPosition().x < enemies[angryCounter].rect.getPosition().x) {
+                            } else if (hero.rect.getPosition().x < enemies[angryCounter].rect.getPosition().x) {
                                 enemies[angryCounter].setDirection(Character::Direction::Left);
-                            }
-                            else if (hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y) {
+                            } else if (hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y) {
                                 enemies[angryCounter].setDirection(Character::Direction::Down);
                             }
-                        }
-                        else { // Enemy Chases Player
+                        } else { // Enemy Chases Player
                             if (hero.rect.getPosition().x < enemies[angryCounter].rect.getPosition().x) {
                                 enemies[angryCounter].setDirection(Character::Direction::Left);
-                            }
-                            else if (hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x) {
+                            } else if (hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x) {
                                 enemies[angryCounter].setDirection(Character::Direction::Right);
-                            }
-                            else if (hero.rect.getPosition().y < enemies[angryCounter].rect.getPosition().y) {
+                            } else if (hero.rect.getPosition().y < enemies[angryCounter].rect.getPosition().y) {
                                 enemies[angryCounter].setDirection(Character::Direction::Up);
-                            }
-                            else if (hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y) {
+                            } else if (hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y) {
                                 enemies[angryCounter].setDirection(Character::Direction::Down);
                             }
                         }
@@ -490,29 +509,75 @@ int main() {
             }
 
 
-
-
             hero.update();
             hero.moveSprite(levelVisible);
 
-            if (elapsedProjectile.asSeconds() >= 0.25) {
+            if (elapsedProjectile.asSeconds() >= 0.20) {
                 clockProjectile.restart();
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                    projectile.rect.setPosition(
-                            hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
-                            hero.rect.getPosition().y + hero.rect.getSize().y / 2 - projectile.rect.getSize().y / 2);
-                    projectile.setDirection(hero.getDirection());
-                    projectileArray.push_back(projectile);
-                    soundShot.play();
+                int shot = 0;
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                    shot = 1;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                    shot = 2;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                    shot = 3;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                    shot = 4;
+                }
+                switch (shot) {
+                    case (1) :
+                        projectile.rect.setPosition(
+                                hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
+                                hero.rect.getPosition().y + hero.rect.getSize().y / 2 -
+                                projectile.rect.getSize().y / 2);
+                        projectile.setDirection(Character::Direction::Up);
+                        projectileArray.push_back(projectile);
+                        soundShot.play();
+                        break;
+                    case (2) :
+                        projectile.rect.setPosition(
+                                hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
+                                hero.rect.getPosition().y + hero.rect.getSize().y / 2 -
+                                projectile.rect.getSize().y / 2);
+                        projectile.setDirection(Character::Direction::Down);
+                        projectileArray.push_back(projectile);
+                        soundShot.play();
+                        break;
+                    case (3) :
+                        projectile.rect.setPosition(
+                                hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
+                                hero.rect.getPosition().y + hero.rect.getSize().y / 2 -
+                                projectile.rect.getSize().y / 2);
+                        projectile.setDirection(Character::Direction::Left);
+                        projectileArray.push_back(projectile);
+                        soundShot.play();
+                        break;
+                    case (4) :
+                        projectile.rect.setPosition(
+                                hero.rect.getPosition().x + hero.rect.getSize().x / 2 - projectile.rect.getSize().x / 2,
+                                hero.rect.getPosition().y + hero.rect.getSize().y / 2 -
+                                projectile.rect.getSize().y / 2);
+                        projectile.setDirection(Character::Direction::Right);
+                        projectileArray.push_back(projectile);
+                        soundShot.play();
+                        break;
+
+                    default:
+                        break;
                 }
             }
 
             // Check projectile-enemy collision
             int pcounter = 0;
-            for(auto itr = projectileArray.begin(); itr != projectileArray.end(); itr++){
+            for (auto itr = projectileArray.begin(); itr != projectileArray.end(); itr++) {
                 int ecounter = 0;
-                for(auto itr2 = enemies.begin(); itr2 != enemies.end(); itr2++) {
-                    if (projectileArray[pcounter].rect.getGlobalBounds().intersects(enemies[ecounter].rect.getGlobalBounds()) &&
+                for (auto itr2 = enemies.begin(); itr2 != enemies.end(); itr2++) {
+                    if (projectileArray[pcounter].rect.getGlobalBounds().intersects(
+                            enemies[ecounter].rect.getGlobalBounds()) &&
                         projectileArray[pcounter].isHostile() == false) {
                         enemies[ecounter].setAlive(false);
                         projectileArray[pcounter].setDestroy(true);
@@ -562,6 +627,11 @@ int main() {
         for (auto itr = enemies.begin(); itr != enemies.end(); itr++) {
             if (enemies[counter].isAlive() == false) {
                 enemies.erase(itr);
+                hero.setExp(hero.getExp() + 1);  //Esperienza per ogni nemico morto!
+                if (hero.getExp() > 19) {
+                    hero.setExp(0);
+                }
+                hero.notify(expSprite);
                 break;
             }
             counter++;

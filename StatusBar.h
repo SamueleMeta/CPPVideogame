@@ -20,6 +20,7 @@ private:
     Hero* subject;
 };
 
+
 class ExperienceBar : public Observer {
 public:
     ExperienceBar(Hero* hero);

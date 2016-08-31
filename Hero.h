@@ -12,7 +12,7 @@ public:
     Hero(int lifeP, int strngth, int energy, std::string name, int mon, int lvl, int exp) :
             Character(lifeP, strngth, energy), name(name), money(mon), heroLevel(lvl), exp(exp) {
         rect.setSize(sf::Vector2f(64, 64));
-        rect.setPosition(0, 0);
+        rect.setPosition(150, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 64, 0, 64, 64));
     }
 

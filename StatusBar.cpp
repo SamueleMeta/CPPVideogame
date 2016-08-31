@@ -20,6 +20,9 @@ void HealthBar::update(int hp, int exp, int money, sf::Sprite& heartsSprite) {
     if(8-hp < 8 && hp != lastHealth) {
         heartsSprite.setTextureRect(sf::IntRect(0, (8 - hp) * 36, 150, 36));
         lastHealth--;
+        if (lastHealth<1){
+            lastHealth=8;
+        }
     }
 }
 

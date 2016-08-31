@@ -55,7 +55,7 @@ protected:
     int health = 8;
     int strength, energy;
     //int energyMax = 100;
-    float speed = 2;
+    float speed = 0.2;
     int counterWalking = 0;
     Direction direction = Direction::Down;
     int counterSword = 0;
