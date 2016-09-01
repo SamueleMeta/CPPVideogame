@@ -331,17 +331,6 @@ int main() {
         window.draw(mapBackground);
         window.draw(mapVisible);
 
-        window.setView(window.getDefaultView());
-
-        window.draw(headSprite);
-        window.draw(nameSprite);
-        window.draw(heartsSprite);
-        window.draw(expSprite);
-        window.draw(moneySprite);
-        window.draw(weaponsSprite);
-        window.draw(potionsSprite);
-        window.draw(scrollsSprite);
-
         sf::Time elapsedProjectile = clockProjectile.getElapsedTime();
 
         sf::Time elapsedAngry = clockAngry.getElapsedTime();
@@ -636,6 +625,18 @@ int main() {
             }
             counter++;
         }
+
+        window.setView(window.getDefaultView());
+
+        // Draw Status Bar
+        window.draw(headSprite);
+        window.draw(nameSprite);
+        window.draw(heartsSprite);
+        window.draw(expSprite);
+        window.draw(moneySprite);
+        window.draw(weaponsSprite);
+        window.draw(potionsSprite);
+        window.draw(scrollsSprite);
 
         // Delete projectiles
         counter = 0;

@@ -80,7 +80,7 @@ bool Mob::outOfbounds(Direction direction) {
                 return true;
             return false;
         case Direction::Left:
-            if (static_cast<int>(rect.getPosition().x - movementSpeed) < 0)
+            if (static_cast<int>(rect.getPosition().x - movementSpeed) < 153)
                 return true;
             return false;
         case Direction::Right:
@@ -116,19 +116,37 @@ bool Mob::collidesRight(const int* level) {
 
 bool Mob::checkCollision(int tile) {
     switch (tile) {
-        case 6:
+        case 1102:
             return true;
-        case 9:
+        case 1103:
             return true;
-        case 10:
+        case 1171:
             return true;
-        case 11:
+        case 1172:
             return true;
-        case 12:
+        case 1180:
             return true;
-        case 13:
+        case 1181:
             return true;
-        case 14:
+        case 1182:
+            return true;
+        case 1183:
+            return true;
+        case 1212:
+            return true;
+        case 1220:
+            return true;
+        case 1221:
+            return true;
+        case 1222:
+            return true;
+        case 1223:
+            return true;
+        case 1224:
+            return true;
+        case 1225:
+            return true;
+        case 1331:
             return true;
         default:
             return false;

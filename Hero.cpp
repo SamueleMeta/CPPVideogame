@@ -174,7 +174,7 @@ bool Hero::outOfbounds(Direction direction) {
                 return true;
             return false;
         case Direction::Left:
-            if (static_cast<int>(rect.getPosition().x - speed) < 0)
+            if (static_cast<int>(rect.getPosition().x - speed) < 150)
                 return true;
             return false;
         case Direction::Right:
@@ -185,25 +185,25 @@ bool Hero::outOfbounds(Direction direction) {
 }
 
 bool Hero::collidesUp(const int* level) {
-    int newY = static_cast<int>(rect.getPosition().y - speed + 24);
-    int tile = level[static_cast<int>((rect.getPosition().x + 24) / 48) + static_cast<int>(newY/ 48) * 19];
+    int newY = static_cast<int>(rect.getPosition().y - speed + 32);
+    int tile = level[static_cast<int>((rect.getPosition().x + 48) / 48) + static_cast<int>(newY/ 48) * 19];
     checkCollision(tile);
 }
 
 bool Hero::collidesDown(const int* level) {
     int newY = static_cast<int>(rect.getPosition().y + speed + 48);
-    int tile = level[static_cast<int>((rect.getPosition().x + 24)/48) + static_cast<int>(newY/48) * 19];
+    int tile = level[static_cast<int>((rect.getPosition().x + 32)/48) + static_cast<int>(newY/48) * 19];
     checkCollision(tile);
 }
 
 bool Hero::collidesLeft(const int* level) {
-    int newX = static_cast<int>(rect.getPosition().x - speed + 24);
+    int newX = static_cast<int>(rect.getPosition().x - speed + 32);
     int tile = level[static_cast<int>(newX/48) + static_cast<int>((rect.getPosition().y + 46)/48) * 19];
     checkCollision(tile);
 }
 
 bool Hero::collidesRight(const int* level) {
-    int newX = static_cast<int>(rect.getPosition().x + speed + 24);
+    int newX = static_cast<int>(rect.getPosition().x + speed + 32);
     int tile = level[static_cast<int>(newX/48) + static_cast<int>((rect.getPosition().y + 46)/48) * 19];
     checkCollision(tile);
 }
@@ -226,6 +226,8 @@ bool Hero::checkCollision(int tile) {
             return true;
         case 1183:
             return true;
+        case 1212:
+            return true;
         case 1220:
             return true;
         case 1221:
@@ -233,6 +235,10 @@ bool Hero::checkCollision(int tile) {
         case 1222:
             return true;
         case 1223:
+            return true;
+        case 1224:
+            return true;
+        case 1225:
             return true;
         case 1331:
             return true;
