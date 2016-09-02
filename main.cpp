@@ -87,6 +87,12 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    // load coin texture
+    sf::Texture textureCoin;
+    if (!textureCoin.loadFromFile("coin.png")) {
+        return EXIT_FAILURE;
+    }
+
     // load profile texture
     sf::Texture textureProfile;
     if (!textureProfile.loadFromFile("Head.png")) {
@@ -153,6 +159,14 @@ int main() {
     soundShot.setBuffer(bufferShot);
 
     hero.sprite.setTexture(texturePlayer);
+
+    std::vector<Item> items;
+
+    Item coinItem;
+    coinItem.rect.setSize(sf::Vector2f(32, 32));
+    coinItem.sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    coinItem.sprite.setTexture(textureCoin);
+
 
     NPC sheep(100, 5, 8, NPC::Animal, "Spettro", 0, false);
     sheep.rect.setPosition(200, 400);
@@ -570,8 +584,21 @@ int main() {
                         projectileArray[pcounter].isHostile() == false) {
                         enemies[ecounter].setAlive(false);
                         projectileArray[pcounter].setDestroy(true);
+                        coinItem.setX(static_cast<int>(enemies[ecounter].rect.getPosition().x + enemies[ecounter].rect.getSize().x/2 - 12));
+                        coinItem.setY(static_cast<int>(enemies[ecounter].rect.getPosition().y + enemies[ecounter].rect.getSize().y/2 - 12));
+                        coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                        items.push_back(coinItem);
                     }
 
+                }
+                pcounter++;
+            }
+
+            // Check Hero - Item collisions
+            pcounter = 0;
+            for (auto itr = items.begin(); itr != items.end(); itr++){
+                if (hero.rect.getGlobalBounds().intersects(items[pcounter].rect.getGlobalBounds())){
+                    items[pcounter].setTooken(true);
                 }
                 pcounter++;
             }
@@ -606,7 +633,13 @@ int main() {
             enemyCounter++;
         }
 
-
+        // Draws items
+        counter = 0;
+        for (auto itr = items.begin(); itr != items.end(); itr++){
+            items[counter].sprite.setPosition(items[counter].rect.getPosition());
+            window.draw(items[counter].sprite);
+            counter++;
+        }
 
         // Draw NPC
         window.draw(sheep.sprite);
@@ -625,6 +658,19 @@ int main() {
             }
             counter++;
         }
+
+        // Delete tooken items
+        counter = 0;
+        for (auto itr = items.begin(); itr != items.end(); itr++) {
+            if (items[counter].isTooken() == true) {
+                items.erase(itr);
+                hero.setMoney(hero.getMoney()+1);
+                //hero.notify(expSprite);
+                break;
+            }
+            counter++;
+        }
+
 
         window.setView(window.getDefaultView());
 

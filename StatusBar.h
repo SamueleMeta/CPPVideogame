@@ -36,5 +36,39 @@ private:
     Hero* subject;
 };
 
+class Item {
+public:
+    Item(){};
+    sf::Texture texture;
+    sf::Sprite sprite;
+    sf::RectangleShape rect;
 
+    bool isTooken() const {
+        return tooken;
+    }
+
+    void setTooken(bool tooken) {
+        Item::tooken = tooken;
+    }
+
+    int getX() const {
+        return x;
+    }
+
+    void setX(int x) {
+        Item::x = x;
+    }
+
+    int getY() const {
+        return y;
+    }
+
+    void setY(int y) {
+        Item::y = y;
+    }
+
+private:
+    int x, y;
+    bool tooken = false;
+};
 #endif //PROJECTVIDEOGAME_STATUSBAR_H

@@ -6,7 +6,6 @@ void Hero::update() {
 }
 
 void Hero::moveSprite(const int* level) {
-    int adder = 0;
     if(hasSword == true) {
         adder = 192;
     }
@@ -45,7 +44,7 @@ void Hero::moveSprite(const int* level) {
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-        if (collidesDown(level) || outOfbounds(Direction::Down)) {
+        if (collidesDown(level) || outOfbounds(Direction::Down) ) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 9, 64, 64));
             }

@@ -102,11 +102,20 @@ public:
         Hero::hasSword = hasSword;
     }
 
+    int getAdder() const {
+        return adder;
+    }
+
+    void setAdder(int adder) {
+        Hero::adder = adder;
+    }
+
 private:
     std::string name;
     int money, heroLevel, exp;
     bool hasSword = false;
     int maxCounter = 2;
+    int adder = 0;
     std::list <Observer*> observers;
 };
 
