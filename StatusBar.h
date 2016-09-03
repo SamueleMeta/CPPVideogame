@@ -11,12 +11,11 @@ public:
 
     virtual ~HealthBar();
 
-    virtual void update(int hp, int exp, int money, sf::Sprite& heartsSprite) override;
+    virtual void update() override;
     virtual void attach() override;
     virtual void detach() override;
 
 private:
-    int lastHealth = 8;
     Hero* subject;
 };
 
@@ -27,12 +26,25 @@ public:
 
     virtual ~ExperienceBar();
 
-    virtual void update(int hp, int exp, int money, sf::Sprite& Sprite) override;
+    virtual void update() override;
     virtual void attach() override;
     virtual void detach() override;
 
 private:
-    int lastExp = 0;
+    Hero* subject;
+};
+
+class MoneyBar : public Observer {
+public:
+    MoneyBar(Hero* hero);
+
+    virtual ~MoneyBar();
+
+    virtual void update() override;
+    virtual void attach() override;
+    virtual void detach() override;
+
+private:
     Hero* subject;
 };
 
@@ -67,8 +79,17 @@ public:
         Item::y = y;
     }
 
+    int getValue() const {
+        return value;
+    }
+
+    void setValue(int value) {
+        Item::value = value;
+    }
+
 private:
     int x, y;
+    int value;
     bool tooken = false;
 };
 #endif //PROJECTVIDEOGAME_STATUSBAR_H

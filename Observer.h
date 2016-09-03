@@ -7,7 +7,7 @@ class Observer {
 public:
     virtual ~Observer() {}
 
-    virtual void update (int health, int exp, int money, sf::Sprite& Sprite) = 0;
+    virtual void update () = 0;
 
     virtual void attach () = 0;
 

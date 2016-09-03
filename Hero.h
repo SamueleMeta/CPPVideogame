@@ -47,11 +47,10 @@ public:
 
     virtual void subscribe(Observer* o) override;
     virtual void unsubscribe(Observer* o) override;
-    virtual void notify(sf::Sprite& heartsSprite) override;
+    virtual void notify() override;
 
 
     bool outOfbounds(Direction direction);
-
 
     int getMoney() const {
         return money;
@@ -110,6 +109,23 @@ public:
         Hero::adder = adder;
     }
 
+
+    const sf::Sprite &getHeartsSprite() const {
+        return heartsSprite;
+    }
+
+    void setHeartsSprite(const sf::Sprite &heartsSprite) {
+        Hero::heartsSprite = heartsSprite;
+    }
+
+    const sf::Sprite &getExpSprite() const {
+        return expSprite;
+    }
+
+    void setExpSprite(const sf::Sprite &expSprite) {
+        Hero::expSprite = expSprite;
+    }
+
 private:
     std::string name;
     int money, heroLevel, exp;
@@ -117,6 +133,8 @@ private:
     int maxCounter = 2;
     int adder = 0;
     std::list <Observer*> observers;
+    sf::Sprite heartsSprite;
+    sf::Sprite expSprite;
 };
 
 #endif //PROJECTVIDEOGAME_HERO_H

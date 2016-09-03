@@ -10,6 +10,6 @@ public:
 
     virtual void subscribe(Observer* o) = 0;
     virtual void unsubscribe(Observer* o) = 0;
-    virtual void notify(sf::Sprite& Sprite) = 0;
+    virtual void notify() = 0;
 };
 #endif //PROJECTVIDEOGAME_SUBJECT_H

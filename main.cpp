@@ -107,6 +107,22 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    sf::Texture textureChaos;
+    if (!textureChaos.loadFromFile("ChaosKnight.png")) {
+        return EXIT_FAILURE;
+    }
+
+    sf::Texture textureChimera;
+    if (!textureChimera.loadFromFile("Chimera.png")) {
+        return EXIT_FAILURE;
+    }
+
+    sf::Texture textureZombie;
+    if (!textureZombie.loadFromFile("Zombie.png")) {
+        return EXIT_FAILURE;
+    }
+
+
     // load fireball texture
     sf::Texture textureFireBall;
     if (!textureFireBall.loadFromFile("fireball.png")) {
@@ -206,16 +222,34 @@ int main() {
     std::vector<Mob> enemies;
 
     //First enemy
-    Mob darkLord(60, 8, 10, Mob::Undead, 0.5, 2, false);
+    Mob darkLord(60, 8, 10, Mob::Undead, 4, 2, false);
     darkLord.rect.setPosition(200, 400);
     darkLord.sprite.setTexture(textureDarkLord);
     enemies.push_back(darkLord);
 
     //Second enemy
-    Mob assassin(40, 2, 9, Mob::Samurai, 0.5, 1, false);
+    Mob assassin(40, 2, 9, Mob::Samurai, 2, 1, false);
     assassin.rect.setPosition(300, 500);
     assassin.sprite.setTexture(textureAssassin);
     enemies.push_back(assassin);
+
+    //Third enemy
+    Mob zombie(40, 2, 9, Mob::Samurai, 3, 1, false);
+    zombie.rect.setPosition(700, 350);
+    zombie.sprite.setTexture(textureZombie);
+    enemies.push_back(zombie);
+
+    //Fourth enemy
+    Mob chimera(40, 2, 9, Mob::Samurai, 5, 1, false);
+    chimera.rect.setPosition(500, 550);
+    chimera.sprite.setTexture(textureChimera);
+    enemies.push_back(chimera);
+
+    //Fifth enemy
+    Mob chaosKnight(40, 2, 9, Mob::Samurai, 10, 1, false);
+    chaosKnight.rect.setPosition(500, 200);
+    chaosKnight.sprite.setTexture(textureChaos);
+    enemies.push_back(chaosKnight);
 
     // Vector of projectiles
     std::vector<Projectile> projectileArray;
@@ -269,6 +303,17 @@ int main() {
     scrollsSprite.setTexture(textureScroll);
     scrollsSprite.setTextureRect(sf::IntRect(0, 0, 150, 80));
     scrollsSprite.setPosition(0, 520);
+
+    // Money text
+    hero.text.setFont(font);
+    hero.text.setString(std::to_string(hero.getMoney()));
+    hero.text.setCharacterSize(30);
+    hero.text.setColor(sf::Color::Red);
+    hero.text.setPosition(80, 315);
+
+    // Set Hearts and Exp sprites
+    hero.setHeartsSprite(heartsSprite);
+    hero.setExpSprite(expSprite);
 
 
     // Define the level with an array of tile indices
@@ -343,6 +388,7 @@ int main() {
 
     ExperienceBar experienceBar(&hero);
     HealthBar healthBar(&hero);
+    MoneyBar moneyBar(&hero);
 
     // run the main loop
     while (window.isOpen()) {
@@ -400,7 +446,7 @@ int main() {
             if (hero.getHealth() < 1) {
                 hero.setHealth(8);
             }
-            hero.notify(heartsSprite);
+            hero.notify();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
@@ -408,7 +454,7 @@ int main() {
             if (hero.getExp() > 19) {
                 hero.setExp(0);
             }
-            hero.notify(expSprite);
+            hero.notify();
         }
 
         if (gameState == Playing) {
@@ -618,9 +664,10 @@ int main() {
                         coinItem.setY(static_cast<int>(enemies[ecounter].rect.getPosition().y +
                                                        enemies[ecounter].rect.getSize().y / 2 - 12));
                         coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                        coinItem.setValue(static_cast<int>(enemies[ecounter].getDropRate()));
                         items.push_back(coinItem);
                     }
-
+                ecounter++;
                 }
                 pcounter++;
             }
@@ -684,7 +731,7 @@ int main() {
                 if (hero.getExp() > 19) {
                     hero.setExp(0);
                 }
-                hero.notify(expSprite);
+                hero.notify();
                 break;
             }
             counter++;
@@ -695,8 +742,8 @@ int main() {
         for (auto itr = items.begin(); itr != items.end(); itr++) {
             if (items[counter].isTooken()) {
                 items.erase(itr);
-                hero.setMoney(hero.getMoney() + 1);
-                //hero.notify(expSprite);
+                hero.setMoney(hero.getMoney()+ items[counter].getValue());
+                hero.notify();
                 break;
             }
             counter++;
@@ -707,13 +754,14 @@ int main() {
         // Draw Status Bar
         window.draw(headSprite);
         window.draw(nameSprite);
-        window.draw(heartsSprite);
-        window.draw(expSprite);
+        window.draw(hero.getHeartsSprite());
+        window.draw(hero.getExpSprite());
         window.draw(moneySprite);
         window.draw(weaponsSprite);
         window.draw(potionsSprite);
         window.draw(scrollsSprite);
         window.draw(name);
+        window.draw(hero.text);
 
         // Delete projectiles
         counter = 0;

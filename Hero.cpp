@@ -247,7 +247,7 @@ void Hero::unsubscribe(Observer *o) {
     observers.remove(o);
 }
 
-void Hero::notify(sf::Sprite& Sprite) {
+void Hero::notify() {
     for(auto itr = std::begin(observers); itr != std::end(observers); itr++)
-        (*itr)->update(health, exp, money, Sprite);
+        (*itr)->update();
 }

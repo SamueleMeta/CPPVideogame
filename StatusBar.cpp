@@ -16,14 +16,10 @@ void HealthBar::detach() {
     subject->unsubscribe(this);
 }
 
-void HealthBar::update(int hp, int exp, int money, sf::Sprite& heartsSprite) {
-    if(8-hp < 8 && hp != lastHealth) {
-        heartsSprite.setTextureRect(sf::IntRect(0, (8 - hp) * 36, 150, 36));
-        lastHealth--;
-        if (lastHealth<1){
-            lastHealth=8;
-        }
-    }
+void HealthBar::update() {
+    sf::Sprite tmpSprite = subject -> getHeartsSprite();
+    tmpSprite.setTextureRect(sf::IntRect(0, ( 8 - subject -> getHealth()) * 36, 150, 36));
+    subject -> setHeartsSprite(tmpSprite);
 }
 
 ExperienceBar::ExperienceBar(Hero *hero) : subject(hero) {
@@ -42,9 +38,29 @@ void ExperienceBar::detach() {
     subject->unsubscribe(this);
 }
 
-void ExperienceBar::update(int hp, int exp, int money, sf::Sprite& expSprite) {
-    if(exp != lastExp) {
-        expSprite.setTextureRect(sf::IntRect(0, exp * 59, 150, 59));
-        lastExp++;
-    }
+void ExperienceBar::update() {
+    sf::Sprite tmpSprite = subject -> getExpSprite();
+    tmpSprite.setTextureRect(sf::IntRect(0, subject -> getExp() * 59, 150, 59));
+    subject -> setExpSprite(tmpSprite);
 }
+
+MoneyBar::MoneyBar (Hero *hero) : subject(hero) {
+    MoneyBar::attach();
+}
+
+MoneyBar::~MoneyBar () {
+    MoneyBar::detach();
+}
+
+void MoneyBar::attach() {
+    subject->subscribe(this);
+}
+
+void MoneyBar::detach() {
+    subject->unsubscribe(this);
+}
+
+void MoneyBar::update() {
+    subject -> text.setString(std::to_string( subject -> getMoney()));
+}
+
