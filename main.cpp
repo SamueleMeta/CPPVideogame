@@ -10,7 +10,6 @@
 #include "Settings.h"
 #include "StatusBar.h"
 
-
 int main() {
 
     enum Gamestate {
@@ -35,16 +34,31 @@ int main() {
     sf::Vector2i positionWindow((sf::VideoMode::getDesktopMode().width / 2) - screenDimension.x / 2,
                                 (sf::VideoMode::getDesktopMode().height / 2) - screenDimension.y / 2);
     window.setPosition(positionWindow);
+    window.setFramerateLimit(60);
 
-    Hero hero(8, 100, 80, "Jon Snow", 200, 1000, 0);
+    int choosenCharacter = 0;
+
+    sf::Font font;
+    font.loadFromFile("PrinceValiant.ttf");
+
+    sf::Text name;
+    name.setColor(sf::Color::Black);
+
+    std::string str;
+
+    int chooseNPC = 0;
 
     if (gameState == Initialize) {
         settings.showSplash(window);
         window.clear();
-        settings.showOptions(window);
+        settings.showOptions(window, choosenCharacter);
+        settings.inputName(str, name, window, font, choosenCharacter);
+        name.setCharacterSize(18);
+        name.setPosition(12, 180);
+        window.clear();
+        settings.chooseNPC(window, chooseNPC);
         gameState = Playing;
     }
-
 
     // center camera
     sf::View view;
@@ -66,9 +80,21 @@ int main() {
     }
 
     // load NPC texture
-    sf::Texture textureSheep;
-    if (!textureSheep.loadFromFile("Sheep.png")) {
-        return EXIT_FAILURE;
+    sf::Texture textureNPC;
+    if (chooseNPC == 0) {
+        if (!textureNPC.loadFromFile("Sheep.png")) {
+            return EXIT_FAILURE;
+        }
+    }
+    else if (chooseNPC == 1) {
+        if (!textureNPC.loadFromFile("Dog.png")) {
+            return EXIT_FAILURE;
+        }
+    }
+    else if (chooseNPC == 2) {
+        if (!textureNPC.loadFromFile("Cock.png")) {
+            return EXIT_FAILURE;
+        }
     }
 
     // load enemy texture
@@ -150,6 +176,7 @@ int main() {
     // Play music
     music.play();
     music.setLoop(true);
+    music.setVolume(20);
 
     // Sound effects
     sf::SoundBuffer bufferShot;
@@ -157,6 +184,9 @@ int main() {
         return -1;
     sf::Sound soundShot;
     soundShot.setBuffer(bufferShot);
+    soundShot.setVolume(10);
+
+    Hero hero(8, 100, 80, str, 200, 1000, 0);
 
     hero.sprite.setTexture(texturePlayer);
 
@@ -168,9 +198,9 @@ int main() {
     coinItem.sprite.setTexture(textureCoin);
 
 
-    NPC sheep(100, 5, 8, NPC::Animal, "Spettro", 0, false);
-    sheep.rect.setPosition(200, 400);
-    sheep.sprite.setTexture(textureSheep);
+    NPC Buddy(100, 5, 8, NPC::Animal, "Foffy", 0, false);
+    Buddy.rect.setPosition(200, 400);
+    Buddy.sprite.setTexture(textureNPC);
 
     // Vector of enemies
     std::vector<Mob> enemies;
@@ -195,7 +225,7 @@ int main() {
     // Head sprite
     sf::Sprite headSprite;
     headSprite.setTexture(textureProfile);
-    headSprite.setTextureRect(sf::IntRect(0, 0, 150, 164));
+    headSprite.setTextureRect(sf::IntRect(choosenCharacter * 150, 0, 150, 164));
     headSprite.setPosition(0, 0);
 
     // Name sprite
@@ -405,7 +435,7 @@ int main() {
             // Angry enemies
             int angryCounter = 0;
             for (auto itr = enemies.begin(); itr != enemies.end(); itr++) {
-                if (enemies[angryCounter].isAngry() == true) {
+                if (enemies[angryCounter].isAngry()) {
                     if (elapsedAngry.asSeconds() >= 1) {
                         clockAngry.restart();
                         int randomNumber = rand();
@@ -580,12 +610,13 @@ int main() {
                 int ecounter = 0;
                 for (auto itr2 = enemies.begin(); itr2 != enemies.end(); itr2++) {
                     if (projectileArray[pcounter].rect.getGlobalBounds().intersects(
-                            enemies[ecounter].rect.getGlobalBounds()) &&
-                        projectileArray[pcounter].isHostile() == false) {
+                            enemies[ecounter].rect.getGlobalBounds()) && !projectileArray[pcounter].isHostile()) {
                         enemies[ecounter].setAlive(false);
                         projectileArray[pcounter].setDestroy(true);
-                        coinItem.setX(static_cast<int>(enemies[ecounter].rect.getPosition().x + enemies[ecounter].rect.getSize().x/2 - 12));
-                        coinItem.setY(static_cast<int>(enemies[ecounter].rect.getPosition().y + enemies[ecounter].rect.getSize().y/2 - 12));
+                        coinItem.setX(static_cast<int>(enemies[ecounter].rect.getPosition().x +
+                                                       enemies[ecounter].rect.getSize().x / 2 - 12));
+                        coinItem.setY(static_cast<int>(enemies[ecounter].rect.getPosition().y +
+                                                       enemies[ecounter].rect.getSize().y / 2 - 12));
                         coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
                         items.push_back(coinItem);
                     }
@@ -596,8 +627,8 @@ int main() {
 
             // Check Hero - Item collisions
             pcounter = 0;
-            for (auto itr = items.begin(); itr != items.end(); itr++){
-                if (hero.rect.getGlobalBounds().intersects(items[pcounter].rect.getGlobalBounds())){
+            for (auto itr = items.begin(); itr != items.end(); itr++) {
+                if (hero.rect.getGlobalBounds().intersects(items[pcounter].rect.getGlobalBounds())) {
                     items[pcounter].setTooken(true);
                 }
                 pcounter++;
@@ -611,8 +642,8 @@ int main() {
             }
 
             // Update NPC
-            sheep.update();
-            sheep.moveSprite(levelVisible);
+            Buddy.update();
+            Buddy.moveSprite(levelVisible);
         }
         // Draw Player
         window.draw(hero.sprite);
@@ -635,19 +666,19 @@ int main() {
 
         // Draws items
         counter = 0;
-        for (auto itr = items.begin(); itr != items.end(); itr++){
+        for (auto itr = items.begin(); itr != items.end(); itr++) {
             items[counter].sprite.setPosition(items[counter].rect.getPosition());
             window.draw(items[counter].sprite);
             counter++;
         }
 
         // Draw NPC
-        window.draw(sheep.sprite);
+        window.draw(Buddy.sprite);
 
         // Delete dead enemies
         counter = 0;
         for (auto itr = enemies.begin(); itr != enemies.end(); itr++) {
-            if (enemies[counter].isAlive() == false) {
+            if (!enemies[counter].isAlive()) {
                 enemies.erase(itr);
                 hero.setExp(hero.getExp() + 1);  //Esperienza per ogni nemico morto!
                 if (hero.getExp() > 19) {
@@ -662,15 +693,14 @@ int main() {
         // Delete tooken items
         counter = 0;
         for (auto itr = items.begin(); itr != items.end(); itr++) {
-            if (items[counter].isTooken() == true) {
+            if (items[counter].isTooken()) {
                 items.erase(itr);
-                hero.setMoney(hero.getMoney()+1);
+                hero.setMoney(hero.getMoney() + 1);
                 //hero.notify(expSprite);
                 break;
             }
             counter++;
         }
-
 
         window.setView(window.getDefaultView());
 
@@ -683,11 +713,12 @@ int main() {
         window.draw(weaponsSprite);
         window.draw(potionsSprite);
         window.draw(scrollsSprite);
+        window.draw(name);
 
         // Delete projectiles
         counter = 0;
         for (auto itr = projectileArray.begin(); itr != projectileArray.end(); itr++) {
-            if (projectileArray[counter].isDestroy() == true) {
+            if (projectileArray[counter].isDestroy()) {
                 projectileArray.erase(itr);
                 break;
             }

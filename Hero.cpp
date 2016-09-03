@@ -6,159 +6,126 @@ void Hero::update() {
 }
 
 void Hero::moveSprite(const int* level) {
-    if(hasSword == true) {
+    int adder = 0;
+    if (hasSword) {
         adder = 192;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         if (collidesUp(level) || outOfbounds(Direction::Up)) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 0, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 3, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 6, 64, 64));
-            }
-            else {
+            } else {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 9, 64, 64));
             }
-        }
-        else {
+        } else {
             rect.move(0, -speed);
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 0, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 3, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 6, 64, 64));
-            }
-            else {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 9, 64, 64));
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 0, 64, 64));
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 3, 64, 64));
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 6, 64, 64));
+            } else {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 9, 64, 64));
             }
         }
         direction = Direction::Up;
     }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-        if (collidesDown(level) || outOfbounds(Direction::Down) ) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        if (collidesDown(level) || outOfbounds(Direction::Down)) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 9, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 3, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 6, 64, 64));
-            }
-            else {
+            } else {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 0, 64, 64));
             }
-        }
-        else {
+        } else {
             rect.move(0, speed);
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 9, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 3, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 6, 64, 64));
-            }
-            else {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 0, 64, 64));
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 9, 64, 64));
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 3, 64, 64));
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 6, 64, 64));
+            } else {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 0, 64, 64));
             }
         }
         direction = Direction::Down;
     }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-        if(collidesLeft(level) || outOfbounds(Direction::Left)) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        if (collidesLeft(level) || outOfbounds(Direction::Left)) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 9, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 0, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 6, 64, 64));
-            }
-            else {
+            } else {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 3, 64, 64));
             }
-        }
-        else {
+        } else {
             rect.move(-speed, 0);
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 9, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 0, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 6, 64, 64));
-            }
-            else {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 3, 64, 64));
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 9, 64, 64));
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 0, 64, 64));
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 6, 64, 64));
+            } else {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 3, 64, 64));
             }
         }
         direction = Direction::Left;
     }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-        if(collidesRight(level) || outOfbounds(Direction::Right)) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        if (collidesRight(level) || outOfbounds(Direction::Right)) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 9, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 0, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 3, 64, 64));
-            }
-            else {
+            } else {
                 sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 6, 64, 64));
             }
-        }
-        else {
+        } else {
             rect.move(speed, 0);
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 9, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 0, 64, 64));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 3, 64, 64));
-            }
-            else {
-                sprite.setTextureRect(sf::IntRect(adder + counterWalking*64, 64 * 6, 64, 64));
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 9, 64, 64));
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 0, 64, 64));
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 3, 64, 64));
+            } else {
+                sprite.setTextureRect(sf::IntRect(adder + counterWalking * 64, 64 * 6, 64, 64));
             }
         }
         direction = Direction::Right;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 0, 64, 64));
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 3, 64, 64));
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 6, 64, 64));
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 9, 64, 64));
     }
 
     counterWalking++;
 
     if (counterWalking == maxCounter){
         counterWalking = 0;
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-        sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 0, 64, 64));
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 3, 64, 64));
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 6, 64, 64));
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-        sprite.setTextureRect(sf::IntRect(adder + 64, 64 * 9, 64, 64));
     }
 }
 

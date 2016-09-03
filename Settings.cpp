@@ -23,7 +23,7 @@ int Settings::showSplash(sf::RenderWindow &window) {
 }
 
 
-int Settings::showOptions(sf::RenderWindow &window) {
+int Settings::showOptions(sf::RenderWindow &window, int &choosen) {
     sf::Texture optionsTexture;
     if (!optionsTexture.loadFromFile("Choose.png")) {
         return EXIT_FAILURE;
@@ -32,15 +32,103 @@ int Settings::showOptions(sf::RenderWindow &window) {
     window.draw(sprite);
     window.display();
 
+    sf::Event event;
+    while (true) {
+        while (window.pollEvent(event)) {
+            if (sf::Mouse::getPosition(window).x > 40 && sf::Mouse::getPosition(window).x < 185 &&
+                sf::Mouse::getPosition(window).y > 156 && sf::Mouse::getPosition(window).y < 300 &&
+                sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                choosen = 0;
+                return 0;
+            }
+            else if (sf::Mouse::getPosition(window).x > 329 && sf::Mouse::getPosition(window).x < 473 &&
+                     sf::Mouse::getPosition(window).y > 156 && sf::Mouse::getPosition(window).y < 300 &&
+                     sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                choosen = 1;
+                return 0;
+            }
+            else if (sf::Mouse::getPosition(window).x > 615 && sf::Mouse::getPosition(window).x < 761 &&
+                     sf::Mouse::getPosition(window).y > 156 && sf::Mouse::getPosition(window).y < 300 &&
+                     sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                choosen = 2;
+                return 0;
+            }
+        }
+    }
+
+}
+
+int Settings::inputName(std::string &str, sf::Text &name, sf::RenderWindow &window, sf::Font &font, int const choosen) {
+    sf::Texture nameTexture;
+    if (!nameTexture.loadFromFile("InsertName.png")){
+        return EXIT_FAILURE;
+    }
+    sf::Sprite sprite(nameTexture);
+
+    sf::Texture PGTexture;
+    if (!PGTexture.loadFromFile("144Portrait.png")){
+        return EXIT_FAILURE;
+    }
+    sf::Sprite PGSprite;
+    PGSprite.setTexture(PGTexture);
+    PGSprite.setTextureRect(sf::IntRect(choosen * 144, 0, 144, 144));
+    PGSprite.setPosition(62, 228);
+
+    while (true) {
+        sf::Event inputName;
+        while (window.pollEvent(inputName)) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+                return 0;
+            if (inputName.type == sf::Event::TextEntered) {
+                if (inputName.text.unicode == '\b') {
+                    if (str.size() > 0)
+                        str.erase(str.size() - 1, 1);
+                }
+                else if (inputName.text.unicode < 128 && str.size() < 10)
+                    str += static_cast<char>(inputName.text.unicode);
+            }
+            name.setString(str);
+            name.setFont(font);
+            name.setPosition(272, 330);
+        }
+        window.clear();
+        window.draw(sprite);
+        window.draw(PGSprite);
+        window.draw(name);
+        window.display();
+    }
+}
+
+int Settings::chooseNPC(sf::RenderWindow &window, int &choose) {
+    sf::Texture NPCTexture;
+    if (!NPCTexture.loadFromFile("NPC.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite sprite(NPCTexture);
+    window.draw(sprite);
+    window.display();
 
     sf::Event event;
     while (true) {
         while (window.pollEvent(event)) {
-            if (sf::Mouse::getPosition(window).x > 40 && sf::Mouse::getPosition(window).x < 184 &&
-                    sf::Mouse::getPosition(window).y > 156 && sf::Mouse::getPosition(window).y < 300 &&
-                    sf::Mouse::isButtonPressed(sf::Mouse::Left))
-                        return 0;
+            if (sf::Mouse::getPosition(window).x > 61 && sf::Mouse::getPosition(window).x < 206 &&
+                sf::Mouse::getPosition(window).y > 163 && sf::Mouse::getPosition(window).y < 308 &&
+                sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                choose = 0;
+                return 0;
+            }
+            else if (sf::Mouse::getPosition(window).x > 327 && sf::Mouse::getPosition(window).x < 472 &&
+                     sf::Mouse::getPosition(window).y > 163 && sf::Mouse::getPosition(window).y < 308 &&
+                     sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                choose = 1;
+                return 0;
+            }
+            else if (sf::Mouse::getPosition(window).x > 593 && sf::Mouse::getPosition(window).x < 738 &&
+                     sf::Mouse::getPosition(window).y > 163 && sf::Mouse::getPosition(window).y < 308 &&
+                     sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                choose = 2;
+                return 0;
+            }
         }
     }
-
 }

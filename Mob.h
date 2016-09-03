@@ -105,7 +105,7 @@ private:
     float dropRate;
     int level;
     bool isBoss;
-    float movementSpeed = 0.1;
+    float movementSpeed = 1.7;
     int movementLength = 100;
     int counter = 0;
     bool alive = true;

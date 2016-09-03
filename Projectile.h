@@ -80,7 +80,7 @@ public:
     sf::Sprite sprite;
 
 private:
-    float movementSpeed = 0.9;
+    float movementSpeed = 5;
     int damage = 1;
     int lifeTime = 350;
     Character::Direction direction;

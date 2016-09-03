@@ -7,7 +7,9 @@
 class Settings{
 public:
     int showSplash(sf::RenderWindow& window);
-    int showOptions(sf::RenderWindow& window);
+    int showOptions(sf::RenderWindow& window, int &choosen);
+    int inputName(std::string &str, sf::Text &name, sf::RenderWindow &window, sf::Font &font, int const choosen);
+    int chooseNPC(sf::RenderWindow &window, int  &choose);
 };
 
 
