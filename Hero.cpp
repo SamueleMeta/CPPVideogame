@@ -213,9 +213,9 @@ bool Hero::checkCollision(int tile) {
     }
 }
 
-void Hero::useWeapon(sf::RenderWindow& window) {
+void Hero::useWeapon() {
     if (direction == Direction::Up) {
-        sprite.setTextureRect(sf::IntRect(192, 576 + 64 * counterSword, 64, 64));
+        sprite.setTextureRect(sf::IntRect(192, 640, 64, 64));
     }
 
     if (direction == Direction::Down) {
@@ -224,18 +224,28 @@ void Hero::useWeapon(sf::RenderWindow& window) {
 
     if (direction == Direction::Left) {
         sprite.setTextureRect(sf::IntRect(192, 256, 64, 64));
-        sprite.setTextureRect(sf::IntRect(192, 320, 64, 64));
     }
 
     if (direction == Direction::Right) {
         sprite.setTextureRect(sf::IntRect(192, 448, 64, 64));
-        sprite.setTextureRect(sf::IntRect(192, 512, 64, 64));
+    }
+}
+
+void Hero::hit() {
+    if (direction == Direction::Up) {
+        sprite.setTextureRect(sf::IntRect(192, 576, 64, 64));
     }
 
-    counterSword++;
+    if (direction == Direction::Down) {
+        sprite.setTextureRect(sf::IntRect(192, 0, 64, 64));
+    }
 
-    if (counterSword == maxCounter){
-        counterSword = 0;
+    if (direction == Direction::Left) {
+        sprite.setTextureRect(sf::IntRect(192, 192, 64, 64));
+    }
+
+    if (direction == Direction::Right) {
+        sprite.setTextureRect(sf::IntRect(192, 384, 64, 64));
     }
 }
 

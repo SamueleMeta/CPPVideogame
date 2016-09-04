@@ -109,7 +109,7 @@ private:
     int movementLength = 100;
     int counter = 0;
     bool alive = true;
-    bool angry = true;
+    bool angry = false;
 };
 
 #endif //PROJECTVIDEOGAME_MOB_H

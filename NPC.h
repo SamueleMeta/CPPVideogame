@@ -66,6 +66,14 @@ public:
         NPC::npcType = npcType;
     }
 
+    Direction getDirection() const {
+        return direction;
+    }
+
+    void setDirection(Direction direction) {
+        NPC::direction = direction;
+    }
+
 private:
     NPC::NPCType npcType;
     std::string name;

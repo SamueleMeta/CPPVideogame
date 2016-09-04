@@ -18,7 +18,8 @@ public:
 
     ~Hero() { }
 
-    void useWeapon(sf::RenderWindow& window);
+    void useWeapon();
+    void hit();
 
     /*
     int levelUp();

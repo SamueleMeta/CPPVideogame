@@ -214,9 +214,9 @@ int main() {
     coinItem.sprite.setTexture(textureCoin);
 
 
-    NPC Buddy(100, 5, 8, NPC::Animal, "Foffy", 0, false);
-    Buddy.rect.setPosition(200, 400);
-    Buddy.sprite.setTexture(textureNPC);
+    NPC buddy(100, 5, 8, NPC::Animal, "Foffy", 0, false);
+    buddy.rect.setPosition(200, 400);
+    buddy.sprite.setTexture(textureNPC);
 
     // Vector of enemies
     std::vector<Mob> enemies;
@@ -458,23 +458,20 @@ int main() {
         }
 
         if (gameState == Playing) {
+
+            // Sword Animation
             if (startAnimation) {
                 if (!isAnimating) {
-                    hero.useWeapon(window);
+                    hero.useWeapon();
                     isAnimating = true;
                     halfAnimation = true;
                 } else {
                     if (halfAnimation) {
-                        hero.sprite.setTextureRect(sf::IntRect(192, 0, 64, 64));
+                        hero.hit();
                         halfAnimation = false;
                         isAnimating = false;
                         startAnimation = false;
-                    } /*else {
-                    hero.sprite.setTextureRect(sf::IntRect(192, 128, 64, 64));
-                    isAnimating = false;
-                    startAnimation = false;
-                }*/
-
+                    }
                 }
             }
 
@@ -672,6 +669,53 @@ int main() {
                 pcounter++;
             }
 
+            // Check sword collisions
+            pcounter = 0;
+            for (auto itr = enemies.begin(); itr != enemies.end(); itr++){
+                if(isAnimating && (hero.getDirection() == Character::Direction::Down) && abs(hero.rect.getPosition().x - enemies[pcounter].rect.getPosition().x) < 48 &&
+                        enemies[pcounter].rect.getPosition().y - (hero.rect.getPosition().y + 64) < 10 && enemies[pcounter].rect.getPosition().y - (hero.rect.getPosition().y + 64) > - 40){
+                    enemies[pcounter].setAlive(false);
+                    coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
+                                                   enemies[pcounter].rect.getSize().x / 2 - 12));
+                    coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
+                                                   enemies[pcounter].rect.getSize().y / 2 - 12));
+                    coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                    coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
+                    items.push_back(coinItem);
+                } else if(isAnimating && (hero.getDirection() == Character::Direction::Up) && abs(hero.rect.getPosition().x - enemies[pcounter].rect.getPosition().x) < 48 &&
+                        hero.rect.getPosition().y - ( enemies[pcounter].rect.getPosition().y + 48) < 10 && hero.rect.getPosition().y - ( enemies[pcounter].rect.getPosition().y + 48) > -40){
+                    enemies[pcounter].setAlive(false);
+                    coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
+                                                   enemies[pcounter].rect.getSize().x / 2 - 12));
+                    coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
+                                                   enemies[pcounter].rect.getSize().y / 2 - 12));
+                    coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                    coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
+                    items.push_back(coinItem);
+                } else if(isAnimating && (hero.getDirection() == Character::Direction::Left) && abs(hero.rect.getPosition().y - enemies[pcounter].rect.getPosition().y) < 48 &&
+                          hero.rect.getPosition().x - ( enemies[pcounter].rect.getPosition().x + 48) < 10 && hero.rect.getPosition().x - ( enemies[pcounter].rect.getPosition().x + 48) > -30){
+                    enemies[pcounter].setAlive(false);
+                    coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
+                                                   enemies[pcounter].rect.getSize().x / 2 - 12));
+                    coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
+                                                   enemies[pcounter].rect.getSize().y / 2 - 12));
+                    coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                    coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
+                    items.push_back(coinItem);
+                }  else if(isAnimating && (hero.getDirection() == Character::Direction::Right) && abs(hero.rect.getPosition().y - enemies[pcounter].rect.getPosition().y) < 48 &&
+                        enemies[pcounter].rect.getPosition().x - (hero.rect.getPosition().x + 64) < 10 && enemies[pcounter].rect.getPosition().x - (hero.rect.getPosition().x + 64) > -30){
+                    enemies[pcounter].setAlive(false);
+                    coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
+                                                   enemies[pcounter].rect.getSize().x / 2 - 12));
+                    coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
+                                                   enemies[pcounter].rect.getSize().y / 2 - 12));
+                    coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                    coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
+                    items.push_back(coinItem);
+                }
+                pcounter++;
+            }
+
             // Check Hero - Item collisions
             pcounter = 0;
             for (auto itr = items.begin(); itr != items.end(); itr++) {
@@ -689,8 +733,8 @@ int main() {
             }
 
             // Update NPC
-            Buddy.update();
-            Buddy.moveSprite(levelVisible);
+            buddy.update();
+            buddy.moveSprite(levelVisible);
         }
         // Draw Player
         window.draw(hero.sprite);
@@ -720,7 +764,7 @@ int main() {
         }
 
         // Draw NPC
-        window.draw(Buddy.sprite);
+        window.draw(buddy.sprite);
 
         // Delete dead enemies
         counter = 0;
