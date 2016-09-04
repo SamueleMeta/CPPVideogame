@@ -189,6 +189,11 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    // Weapons
+    Weapon sword(2, "sword");
+    Weapon axe(4, "axe");
+    Weapon stick(1, "stick");
+
     // Play music
     music.play();
     music.setLoop(true);
@@ -206,6 +211,18 @@ int main() {
 
     hero.sprite.setTexture(texturePlayer);
 
+    switch (choosenCharacter) {
+        case 0:
+            hero.setWeapon(&sword);
+            break;
+        case 1:
+            hero.setWeapon(&axe);
+            break;
+        case 2:
+            hero.setWeapon(&stick);
+            break;
+    }
+
     std::vector<Item> items;
 
     Item coinItem;
@@ -222,7 +239,7 @@ int main() {
     std::vector<Mob> enemies;
 
     //First enemy
-    Mob darkLord(60, 8, 10, Mob::Undead, 4, 2, false);
+    Mob darkLord(8, 8, 10, Mob::Undead, 4, 2, false);
     darkLord.rect.setPosition(200, 400);
     darkLord.sprite.setTexture(textureDarkLord);
     enemies.push_back(darkLord);
@@ -654,15 +671,19 @@ int main() {
                 for (auto itr2 = enemies.begin(); itr2 != enemies.end(); itr2++) {
                     if (projectileArray[pcounter].rect.getGlobalBounds().intersects(
                             enemies[ecounter].rect.getGlobalBounds()) && !projectileArray[pcounter].isHostile()) {
-                        enemies[ecounter].setAlive(false);
-                        projectileArray[pcounter].setDestroy(true);
-                        coinItem.setX(static_cast<int>(enemies[ecounter].rect.getPosition().x +
-                                                       enemies[ecounter].rect.getSize().x / 2 - 12));
-                        coinItem.setY(static_cast<int>(enemies[ecounter].rect.getPosition().y +
-                                                       enemies[ecounter].rect.getSize().y / 2 - 12));
-                        coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
-                        coinItem.setValue(static_cast<int>(enemies[ecounter].getDropRate()));
-                        items.push_back(coinItem);
+                        enemies[ecounter].setHealth(enemies[ecounter].getHealth()-1);
+                        enemies[pcounter].setAngry(true);
+                        if(enemies[ecounter].getHealth() <= 0) {
+                            enemies[ecounter].setAlive(false);
+                            projectileArray[pcounter].setDestroy(true);
+                            coinItem.setX(static_cast<int>(enemies[ecounter].rect.getPosition().x +
+                                                           enemies[ecounter].rect.getSize().x / 2 - 12));
+                            coinItem.setY(static_cast<int>(enemies[ecounter].rect.getPosition().y +
+                                                           enemies[ecounter].rect.getSize().y / 2 - 12));
+                            coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                            coinItem.setValue(static_cast<int>(enemies[ecounter].getDropRate()));
+                            items.push_back(coinItem);
+                        }
                     }
                 ecounter++;
                 }
@@ -674,44 +695,60 @@ int main() {
             for (auto itr = enemies.begin(); itr != enemies.end(); itr++){
                 if(isAnimating && (hero.getDirection() == Character::Direction::Down) && abs(hero.rect.getPosition().x - enemies[pcounter].rect.getPosition().x) < 48 &&
                         enemies[pcounter].rect.getPosition().y - (hero.rect.getPosition().y + 64) < 10 && enemies[pcounter].rect.getPosition().y - (hero.rect.getPosition().y + 64) > - 40){
-                    enemies[pcounter].setAlive(false);
-                    coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
-                                                   enemies[pcounter].rect.getSize().x / 2 - 12));
-                    coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
-                                                   enemies[pcounter].rect.getSize().y / 2 - 12));
-                    coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
-                    coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
-                    items.push_back(coinItem);
+                    enemies[pcounter].setHealth(enemies[pcounter].getHealth() - hero.getWeapon()->getStrength());
+                    enemies[pcounter].setAngry(true);
+                    if(enemies[pcounter].getHealth() <= 0) {
+                        enemies[pcounter].setAlive(false);
+                        coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
+                                                       enemies[pcounter].rect.getSize().x / 2 - 12));
+                        coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
+                                                       enemies[pcounter].rect.getSize().y / 2 - 12));
+                        coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                        coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
+                        items.push_back(coinItem);
+                    }
                 } else if(isAnimating && (hero.getDirection() == Character::Direction::Up) && abs(hero.rect.getPosition().x - enemies[pcounter].rect.getPosition().x) < 48 &&
                         hero.rect.getPosition().y - ( enemies[pcounter].rect.getPosition().y + 48) < 10 && hero.rect.getPosition().y - ( enemies[pcounter].rect.getPosition().y + 48) > -40){
-                    enemies[pcounter].setAlive(false);
-                    coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
-                                                   enemies[pcounter].rect.getSize().x / 2 - 12));
-                    coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
-                                                   enemies[pcounter].rect.getSize().y / 2 - 12));
-                    coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
-                    coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
-                    items.push_back(coinItem);
+                    enemies[pcounter].setHealth(enemies[pcounter].getHealth() - hero.getWeapon()->getStrength());
+                    enemies[pcounter].setAngry(true);
+                    if(enemies[pcounter].getHealth() <= 0) {
+                        enemies[pcounter].setAlive(false);
+                        coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
+                                                       enemies[pcounter].rect.getSize().x / 2 - 12));
+                        coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
+                                                       enemies[pcounter].rect.getSize().y / 2 - 12));
+                        coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                        coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
+                        items.push_back(coinItem);
+                    }
                 } else if(isAnimating && (hero.getDirection() == Character::Direction::Left) && abs(hero.rect.getPosition().y - enemies[pcounter].rect.getPosition().y) < 48 &&
                           hero.rect.getPosition().x - ( enemies[pcounter].rect.getPosition().x + 48) < 10 && hero.rect.getPosition().x - ( enemies[pcounter].rect.getPosition().x + 48) > -30){
-                    enemies[pcounter].setAlive(false);
-                    coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
-                                                   enemies[pcounter].rect.getSize().x / 2 - 12));
-                    coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
-                                                   enemies[pcounter].rect.getSize().y / 2 - 12));
-                    coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
-                    coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
-                    items.push_back(coinItem);
+                    enemies[pcounter].setHealth(enemies[pcounter].getHealth() - hero.getWeapon()->getStrength());
+                    enemies[pcounter].setAngry(true);
+                    if(enemies[pcounter].getHealth() <= 0) {
+                        enemies[pcounter].setAlive(false);
+                        coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
+                                                       enemies[pcounter].rect.getSize().x / 2 - 12));
+                        coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
+                                                       enemies[pcounter].rect.getSize().y / 2 - 12));
+                        coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                        coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
+                        items.push_back(coinItem);
+                    }
                 }  else if(isAnimating && (hero.getDirection() == Character::Direction::Right) && abs(hero.rect.getPosition().y - enemies[pcounter].rect.getPosition().y) < 48 &&
                         enemies[pcounter].rect.getPosition().x - (hero.rect.getPosition().x + 64) < 10 && enemies[pcounter].rect.getPosition().x - (hero.rect.getPosition().x + 64) > -30){
-                    enemies[pcounter].setAlive(false);
-                    coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
-                                                   enemies[pcounter].rect.getSize().x / 2 - 12));
-                    coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
-                                                   enemies[pcounter].rect.getSize().y / 2 - 12));
-                    coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
-                    coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
-                    items.push_back(coinItem);
+                    enemies[pcounter].setHealth(enemies[pcounter].getHealth() - hero.getWeapon()->getStrength());
+                    enemies[pcounter].setAngry(true);
+                    if(enemies[pcounter].getHealth() <= 0) {
+                        enemies[pcounter].setAlive(false);
+                        coinItem.setX(static_cast<int>(enemies[pcounter].rect.getPosition().x +
+                                                       enemies[pcounter].rect.getSize().x / 2 - 12));
+                        coinItem.setY(static_cast<int>(enemies[pcounter].rect.getPosition().y +
+                                                       enemies[pcounter].rect.getSize().y / 2 - 12));
+                        coinItem.rect.setPosition(coinItem.getX(), coinItem.getY());
+                        coinItem.setValue(static_cast<int>(enemies[pcounter].getDropRate()));
+                        items.push_back(coinItem);
+                    }
                 }
                 pcounter++;
             }
@@ -784,6 +821,17 @@ int main() {
                 pcounter++;
             }
 
+            // Hero - enemy projectile collisions
+            pcounter = 0;
+            for (auto itr = projectileArray.begin(); itr != projectileArray.end(); itr++){
+                if(projectileArray[pcounter].rect.getGlobalBounds().intersects(hero.rect.getGlobalBounds()) &&
+                        projectileArray[pcounter].isHostile()){
+                    hero.setHealth(hero.getHealth()-1);
+                    hero.notify();
+                    projectileArray[pcounter].setDestroy(true);
+                }
+                pcounter++;
+            }
 
 
             // Update enemies

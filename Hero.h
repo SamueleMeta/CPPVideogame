@@ -127,6 +127,14 @@ public:
         Hero::expSprite = expSprite;
     }
 
+    Weapon *getWeapon() const {
+        return weapon;
+    }
+
+    void setWeapon(Weapon *weapon) {
+        Hero::weapon = weapon;
+    }
+
 private:
     std::string name;
     int money, heroLevel, exp;
@@ -136,6 +144,7 @@ private:
     std::list <Observer*> observers;
     sf::Sprite heartsSprite;
     sf::Sprite expSprite;
+    Weapon* weapon;
 };
 
 #endif //PROJECTVIDEOGAME_HERO_H

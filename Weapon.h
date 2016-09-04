@@ -3,11 +3,9 @@
 
 class Weapon {
 public:
-    Weapon(int strngth, bool magic, bool poisoned, bool burning) :
-            strength(strngth), isMagic(magic), isPoisoned(poisoned), isBurning(burning){}
+    Weapon (int strngt, std::string type) : strength(strngt), type(type) {}
 
     virtual ~Weapon() {}
-
 
     int getStrength() const {
         return strength;
@@ -17,36 +15,9 @@ public:
         Weapon::strength = strength;
     }
 
-    bool isIsBurning() const {
-        return isBurning;
-    }
-
-    void setIsBurning(bool isBurning) {
-        Weapon::isBurning = isBurning;
-    }
-
-    bool isIsPoisoned() const {
-        return isPoisoned;
-    }
-
-    void setIsPoisoned(bool isPoisoned) {
-        Weapon::isPoisoned = isPoisoned;
-    }
-
-    bool isIsMagic() const {
-        return isMagic;
-    }
-
-    void setIsMagic(bool isMagic) {
-        Weapon::isMagic = isMagic;
-    }
-
-    sf::RectangleShape rect;
-    sf::Sprite sprite;
-
 protected:
     int strength;
-    bool isMagic, isPoisoned, isBurning;
+    std::string type;
 };
 
 #endif //PROJECTVIDEOGAME_WEAPON_H
