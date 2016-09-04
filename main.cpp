@@ -725,6 +725,7 @@ int main() {
                 pcounter++;
             }
 
+            // Collisions between NPC & enemies
             pcounter = 0;
             for (auto itr = enemies.begin(); itr != enemies.end(); itr++){
                 if(abs(buddy.rect.getPosition().x - enemies[pcounter].rect.getPosition().x) < 55 && buddy.rect.getPosition().y - enemies[pcounter].rect.getPosition().y < 55 &&
@@ -749,6 +750,41 @@ int main() {
                 }
                 pcounter++;
             }
+
+            //Collisions between enemies
+            int incounter = 0;
+            pcounter = 0;
+            for(auto itr = enemies.begin(); itr != enemies.end(); itr++){
+                incounter = 0;
+                for(auto initr = enemies.begin(); initr != enemies.end(); initr++){
+                    if(itr != initr){
+                        if(abs(enemies[incounter].rect.getPosition().x - enemies[pcounter].rect.getPosition().x) < 55 && enemies[incounter].rect.getPosition().y - enemies[pcounter].rect.getPosition().y < 55 &&
+                                enemies[incounter].rect.getPosition().y - enemies[pcounter].rect.getPosition().y > 0) {
+                            enemies[incounter].setCollUp(true);
+                            enemies[pcounter].setCollDown(true);
+                        }
+                        if(abs(enemies[incounter].rect.getPosition().x - enemies[pcounter].rect.getPosition().x) < 55 && enemies[pcounter].rect.getPosition().y -  enemies[incounter].rect.getPosition().y < 55 &&
+                           enemies[pcounter].rect.getPosition().y   - enemies[incounter].rect.getPosition().y > 0) {
+                            enemies[incounter].setCollDown(true);
+                            enemies[pcounter].setCollUp(true);
+                        }
+                        if(abs(enemies[incounter].rect.getPosition().y - enemies[pcounter].rect.getPosition().y) < 55 && enemies[pcounter].rect.getPosition().x - enemies[incounter].rect.getPosition().x < 55 &&
+                           enemies[pcounter].rect.getPosition().x - enemies[incounter].rect.getPosition().x > 0){
+                            enemies[incounter].setCollRight(true);
+                            enemies[pcounter].setCollLeft(true);
+                        }
+                        if(abs(enemies[incounter].rect.getPosition().y - enemies[pcounter].rect.getPosition().y) < 55 && enemies[incounter].rect.getPosition().x - enemies[pcounter].rect.getPosition().x < 55 &&
+                                enemies[incounter].rect.getPosition().x - enemies[pcounter].rect.getPosition().x > 0){
+                            enemies[incounter].setCollLeft(true);
+                            enemies[pcounter].setCollRight(true);
+                        }
+                    }
+                    incounter++;
+                }
+                pcounter++;
+            }
+
+
 
             // Update enemies
             for (auto itr = enemies.begin(); itr != enemies.end(); itr++) {
