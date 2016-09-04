@@ -100,6 +100,42 @@ public:
         Mob::direction = direction;
     }
 
+    EnemyType getOgre() const {
+        return Ogre;
+    }
+
+    bool isCollLeft() const {
+        return collLeft;
+    }
+
+    void setCollLeft(bool collLeft) {
+        Mob::collLeft = collLeft;
+    }
+
+    bool isCollDown() const {
+        return collDown;
+    }
+
+    void setCollDown(bool collDown) {
+        Mob::collDown = collDown;
+    }
+
+    bool isCollUp() const {
+        return collUp;
+    }
+
+    void setCollUp(bool collUp) {
+        Mob::collUp = collUp;
+    }
+
+    bool isCollRight() const {
+        return collRight;
+    }
+
+    void setCollRight(bool collRight) {
+        Mob::collRight = collRight;
+    }
+
 private:
     Mob::EnemyType enemyType;
     float dropRate;
@@ -110,6 +146,10 @@ private:
     int counter = 0;
     bool alive = true;
     bool angry = false;
+    bool collUp = false;
+    bool collDown = false;
+    bool collLeft = false;
+    bool collRight = false;
 };
 
 #endif //PROJECTVIDEOGAME_MOB_H

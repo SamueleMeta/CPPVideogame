@@ -725,6 +725,31 @@ int main() {
                 pcounter++;
             }
 
+            pcounter = 0;
+            for (auto itr = enemies.begin(); itr != enemies.end(); itr++){
+                if(abs(buddy.rect.getPosition().x - enemies[pcounter].rect.getPosition().x) < 55 && buddy.rect.getPosition().y - enemies[pcounter].rect.getPosition().y < 55 &&
+                        buddy.rect.getPosition().y - enemies[pcounter].rect.getPosition().y > 0) {
+                    buddy.setCollUp(true);
+                    enemies[pcounter].setCollDown(true);
+                }
+                if(abs(buddy.rect.getPosition().x - enemies[pcounter].rect.getPosition().x) < 55 && enemies[pcounter].rect.getPosition().y -  buddy.rect.getPosition().y < 55 &&
+                            enemies[pcounter].rect.getPosition().y   - buddy.rect.getPosition().y > 0) {
+                    buddy.setCollDown(true);
+                    enemies[pcounter].setCollUp(true);
+                }
+                if(abs(buddy.rect.getPosition().y - enemies[pcounter].rect.getPosition().y) < 55 && enemies[pcounter].rect.getPosition().x - buddy.rect.getPosition().x < 55 &&
+                        enemies[pcounter].rect.getPosition().x - buddy.rect.getPosition().x > 0){
+                    buddy.setCollRight(true);
+                    enemies[pcounter].setCollLeft(true);
+                }
+                if(abs(buddy.rect.getPosition().y - enemies[pcounter].rect.getPosition().y) < 55 && buddy.rect.getPosition().x - enemies[pcounter].rect.getPosition().x < 55 &&
+                        buddy.rect.getPosition().x - enemies[pcounter].rect.getPosition().x > 0){
+                    buddy.setCollLeft(true);
+                    enemies[pcounter].setCollRight(true);
+                }
+                pcounter++;
+            }
+
             // Update enemies
             for (auto itr = enemies.begin(); itr != enemies.end(); itr++) {
                 enemies[enemyCounter].update();

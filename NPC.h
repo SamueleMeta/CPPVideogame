@@ -74,6 +74,38 @@ public:
         NPC::direction = direction;
     }
 
+    bool isCollRight() const {
+        return collRight;
+    }
+
+    void setCollRight(bool collRight) {
+        NPC::collRight = collRight;
+    }
+
+    bool isCollLeft() const {
+        return collLeft;
+    }
+
+    void setCollLeft(bool collLeft) {
+        NPC::collLeft = collLeft;
+    }
+
+    bool isCollDown() const {
+        return collDown;
+    }
+
+    void setCollDown(bool collDown) {
+        NPC::collDown = collDown;
+    }
+
+    bool isCollUp() const {
+        return collUp;
+    }
+
+    void setCollUp(bool collUp) {
+        NPC::collUp = collUp;
+    }
+
 private:
     NPC::NPCType npcType;
     std::string name;
@@ -81,6 +113,10 @@ private:
     bool hostile;
     int counter;
     int movementLength = 150;
+    bool collUp = false;
+    bool collDown = false;
+    bool collLeft = false;
+    bool collRight = false;
 };
 
 #endif //PROJECTVIDEOGAME_NPC_H
