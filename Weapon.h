@@ -15,6 +15,14 @@ public:
         Weapon::strength = strength;
     }
 
+    const std::string &getType() const {
+        return type;
+    }
+
+    void setType(const std::string &type) {
+        Weapon::type = type;
+    }
+
 protected:
     int strength;
     std::string type;

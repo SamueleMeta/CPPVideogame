@@ -48,6 +48,20 @@ private:
     Hero* subject;
 };
 
+class WeaponBar : public Observer {
+public:
+    WeaponBar(Hero* hero);
+
+    virtual ~WeaponBar();
+
+    virtual void update() override;
+    virtual void attach() override;
+    virtual void detach() override;
+
+private:
+    Hero* subject;
+};
+
 class Item {
 public:
     Item(){};
@@ -87,9 +101,18 @@ public:
         Item::value = value;
     }
 
+    const std::string &getType() const {
+        return type;
+    }
+
+    void setType(const std::string &type) {
+        Item::type = type;
+    }
+
 private:
     int x, y;
     int value;
     bool tooken = false;
+    std::string type;
 };
 #endif //PROJECTVIDEOGAME_STATUSBAR_H

@@ -135,6 +135,47 @@ public:
         Hero::weapon = weapon;
     }
 
+
+    Potion *getPotion() const {
+        return potion;
+    }
+
+    void setPotion(Potion *potion) {
+        Hero::potion = potion;
+    }
+
+    bool isChangeToStick() const {
+        return changeToStick;
+    }
+
+    void setChangeToStick(bool changeToStick) {
+        Hero::changeToStick = changeToStick;
+    }
+
+    bool isChangeToAxe() const {
+        return changeToAxe;
+    }
+
+    void setChangeToAxe(bool changeToAxe) {
+        Hero::changeToAxe = changeToAxe;
+    }
+
+    bool isChangeToSword() const {
+        return changeToSword;
+    }
+
+    void setChangeToSword(bool changeToSword) {
+        Hero::changeToSword = changeToSword;
+    }
+
+    const sf::Sprite &getWeaponSprite() const {
+        return weaponSprite;
+    }
+
+    void setWeaponSprite(const sf::Sprite &weaponSprite) {
+        Hero::weaponSprite = weaponSprite;
+    }
+
 private:
     std::string name;
     int money, heroLevel, exp;
@@ -144,7 +185,13 @@ private:
     std::list <Observer*> observers;
     sf::Sprite heartsSprite;
     sf::Sprite expSprite;
+    sf::Sprite weaponSprite;
     Weapon* weapon;
+    Potion* potion;
+    Scroll* scroll;
+    bool changeToSword = false;
+    bool changeToAxe = false;
+    bool changeToStick = false;
 };
 
 #endif //PROJECTVIDEOGAME_HERO_H

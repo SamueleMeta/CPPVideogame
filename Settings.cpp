@@ -101,7 +101,7 @@ int Settings::inputName(std::string &str, sf::Text &name, sf::RenderWindow &wind
 
 int Settings::chooseNPC(sf::RenderWindow &window, int &choose) {
     sf::Texture NPCTexture;
-    if (!NPCTexture.loadFromFile("NPC.png")) {
+    if (!NPCTexture.loadFromFile("alternativa.png")) {
         return EXIT_FAILURE;
     }
     sf::Sprite sprite(NPCTexture);
@@ -111,20 +111,20 @@ int Settings::chooseNPC(sf::RenderWindow &window, int &choose) {
     sf::Event event;
     while (true) {
         while (window.pollEvent(event)) {
-            if (sf::Mouse::getPosition(window).x > 61 && sf::Mouse::getPosition(window).x < 206 &&
-                sf::Mouse::getPosition(window).y > 163 && sf::Mouse::getPosition(window).y < 308 &&
+            if (sf::Mouse::getPosition(window).x > 0 && sf::Mouse::getPosition(window).x < 800 &&
+                sf::Mouse::getPosition(window).y > 162 && sf::Mouse::getPosition(window).y < 308 &&
                 sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 choose = 0;
                 return 0;
             }
-            else if (sf::Mouse::getPosition(window).x > 327 && sf::Mouse::getPosition(window).x < 472 &&
-                     sf::Mouse::getPosition(window).y > 163 && sf::Mouse::getPosition(window).y < 308 &&
+            else if (sf::Mouse::getPosition(window).x > 0 && sf::Mouse::getPosition(window).x < 800 &&
+                     sf::Mouse::getPosition(window).y > 308 && sf::Mouse::getPosition(window).y < 454 &&
                      sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 choose = 1;
                 return 0;
             }
-            else if (sf::Mouse::getPosition(window).x > 593 && sf::Mouse::getPosition(window).x < 738 &&
-                     sf::Mouse::getPosition(window).y > 163 && sf::Mouse::getPosition(window).y < 308 &&
+            else if (sf::Mouse::getPosition(window).x > 0 && sf::Mouse::getPosition(window).x < 800 &&
+                     sf::Mouse::getPosition(window).y > 454 && sf::Mouse::getPosition(window).y < 600 &&
                      sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 choose = 2;
                 return 0;

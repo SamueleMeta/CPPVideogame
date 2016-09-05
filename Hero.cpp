@@ -6,9 +6,12 @@ void Hero::update() {
 }
 
 void Hero::moveSprite(const int* level) {
-    int adder = 0;
-    if (hasSword) {
+    if(weapon->getType() == "sword"){
         adder = 192;
+    } else if(weapon->getType() == "stick") {
+        adder = 576;
+    } else if(weapon->getType() == "axe"){
+        adder = 384;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
@@ -222,38 +225,54 @@ bool Hero::checkCollision(int tile) {
 }
 
 void Hero::useWeapon() {
+    if(weapon->getType() == "sword"){
+        adder = 192;
+    } else if(weapon->getType() == "stick") {
+        adder = 576;
+    } else if(weapon->getType() == "axe"){
+        adder = 384;
+    }
+
     if (direction == Direction::Up) {
-        sprite.setTextureRect(sf::IntRect(192, 640, 64, 64));
+        sprite.setTextureRect(sf::IntRect(adder, 640, 64, 64));
     }
 
     if (direction == Direction::Down) {
-        sprite.setTextureRect(sf::IntRect(192, 64, 64, 64));
+        sprite.setTextureRect(sf::IntRect(adder, 64, 64, 64));
     }
 
     if (direction == Direction::Left) {
-        sprite.setTextureRect(sf::IntRect(192, 256, 64, 64));
+        sprite.setTextureRect(sf::IntRect(adder, 256, 64, 64));
     }
 
     if (direction == Direction::Right) {
-        sprite.setTextureRect(sf::IntRect(192, 448, 64, 64));
+        sprite.setTextureRect(sf::IntRect(adder, 448, 64, 64));
     }
 }
 
 void Hero::hit() {
+    if(weapon->getType() == "sword"){
+        adder = 192;
+    } else if(weapon->getType() == "stick") {
+        adder = 576;
+    } else if(weapon->getType() == "axe"){
+        adder = 384;
+    }
+
     if (direction == Direction::Up) {
-        sprite.setTextureRect(sf::IntRect(192, 576, 64, 64));
+        sprite.setTextureRect(sf::IntRect(adder, 576, 64, 64));
     }
 
     if (direction == Direction::Down) {
-        sprite.setTextureRect(sf::IntRect(192, 0, 64, 64));
+        sprite.setTextureRect(sf::IntRect(adder, 0, 64, 64));
     }
 
     if (direction == Direction::Left) {
-        sprite.setTextureRect(sf::IntRect(192, 192, 64, 64));
+        sprite.setTextureRect(sf::IntRect(adder, 192, 64, 64));
     }
 
     if (direction == Direction::Right) {
-        sprite.setTextureRect(sf::IntRect(192, 384, 64, 64));
+        sprite.setTextureRect(sf::IntRect(adder, 384, 64, 64));
     }
 }
 

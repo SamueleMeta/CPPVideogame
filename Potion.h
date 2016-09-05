@@ -3,47 +3,21 @@
 
 class Potion {
 public:
-    Potion(int health, int energy, int strength, bool special) :
-            healthR(health), energyR(energy), strengthR(strength), isStrong(special) { };
+    Potion (int rec) : recovery (rec) { };
 
     virtual ~Potion() { }
 
 
-    int getHealthR() const {
-        return healthR;
+    int getRecovery() const {
+        return recovery;
     }
 
-    void setHealthR(int healthR) {
-        Potion::healthR = healthR;
-    }
-
-    int getEnergyR() const {
-        return energyR;
-    }
-
-    void setEnergyR(int energyR) {
-        Potion::energyR = energyR;
-    }
-
-    int getStrengthR() const {
-        return strengthR;
-    }
-
-    void setStrengthR(int strengthR) {
-        Potion::strengthR = strengthR;
-    }
-
-    bool isIsStrong() const {
-        return isStrong;
-    }
-
-    void setIsStrong(bool isStrong) {
-        Potion::isStrong = isStrong;
+    void setRecovery(int recovery) {
+        Potion::recovery = recovery;
     }
 
 private:
-    int healthR, energyR, strengthR;
-    bool isStrong;
+    int recovery;
 };
 
 #endif //PROJECTVIDEOGAME_POTION_H
