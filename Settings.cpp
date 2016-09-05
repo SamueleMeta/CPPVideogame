@@ -132,3 +132,24 @@ int Settings::chooseNPC(sf::RenderWindow &window, int &choose) {
         }
     }
 }
+
+int Settings::GameOver(sf::RenderWindow &window) {
+    sf::Texture GOTexture;
+    if (!GOTexture.loadFromFile("GameOver.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite sprite(GOTexture);
+
+    window.clear();
+    window.draw(sprite);
+    window.display();
+
+    sf::Event event;
+    while (true) {
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::EventType::KeyPressed ||
+                event.type == sf::Event::EventType::MouseButtonPressed)
+                return 0;
+        }
+    }
+}

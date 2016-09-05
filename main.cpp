@@ -9,6 +9,7 @@
 #include "Projectile.h"
 #include "Settings.h"
 #include "StatusBar.h"
+#include "Strategy.h"
 
 int main() {
 
@@ -20,7 +21,9 @@ int main() {
 
     Settings settings;
 
-    const int neve = 1298;
+    Strategy strategy;
+
+    const int erba = 1044;
     const int trsp = 1300;
     bool isAnimating = false;
     bool startAnimation = false;
@@ -72,11 +75,24 @@ int main() {
 
     // Clock for angry enemies
     sf::Clock clockAngry;
+    // Clock for NPC
+    sf::Clock clockNPC;
 
     // load player texture
     sf::Texture texturePlayer;
-    if (!texturePlayer.loadFromFile("TileP.png")) {
-        return EXIT_FAILURE;
+    if (choosenCharacter == 0) {
+        if (!texturePlayer.loadFromFile("HeroTile.png")) {
+            return EXIT_FAILURE;
+        }
+    } else if ( choosenCharacter == 1){
+        if (!texturePlayer.loadFromFile("WitchTile.png")) {
+            return EXIT_FAILURE;
+        }
+    }
+    else if ( choosenCharacter == 2){
+        if (!texturePlayer.loadFromFile("CoolHeroTile.png")) {
+            return EXIT_FAILURE;
+        }
     }
 
     // load NPC texture
@@ -121,7 +137,6 @@ int main() {
     if (!textureZombie.loadFromFile("Zombie.png")) {
         return EXIT_FAILURE;
     }
-
 
     // load fireball texture
     sf::Texture textureFireBall;
@@ -230,8 +245,7 @@ int main() {
     coinItem.sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
     coinItem.sprite.setTexture(textureCoin);
 
-
-    NPC buddy(100, 5, 8, NPC::Animal, "Foffy", 0, false);
+    NPC buddy(100, 80, 8, NPC::Animal, "Foffy", 0, false);
     buddy.rect.setPosition(200, 400);
     buddy.sprite.setTexture(textureNPC);
 
@@ -332,36 +346,22 @@ int main() {
     hero.setHeartsSprite(heartsSprite);
     hero.setExpSprite(expSprite);
 
-
     // Define the level with an array of tile indices
     const int levelBackground[] =
             {
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
-                    neve, neve, neve, neve, neve, 939, 940, 941, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve,
-                    neve, neve, neve, neve, neve, 945, 943, 946, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve,
-                    neve, neve, neve, neve, neve, 942, 943, 944, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve,
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
-                    neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve, neve,
-                    neve, neve, neve,
+                    1044, 1044, 1044, 1044, 1052, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1054,
+                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 849, 850, 850, 850, 850, 850, 850, 850, 850, 851, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 857, 857, 857, 857, 857, 857, 857, 857, 853, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 857, 855, 855, 855, 855, 855, 855, 855, 856, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
             };
 
     // create the tilemap from the level definition
@@ -371,30 +371,19 @@ int main() {
 
     const int levelVisible[] =
             {
-                    829, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 830, 831,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, 1172, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1103, 1103,
-                    trsp, 1180, 1181,
-                    trsp, trsp, trsp, trsp, trsp, trsp, 1212, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1103, 1103,
-                    trsp, 1220, 1221,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, 1182, 1183,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, 1222, 1223,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, 1184, 1185,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, 1331, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1102,
-                    trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-                    995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995, 995,
+                    trsp, trsp, trsp, trsp, trsp, trsp, 496, trsp, trsp, 484, trsp, trsp, 460, trsp, 497, trsp, trsp, 460, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1080, trsp, trsp, trsp, 609, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 474, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, 1081, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 514, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 563, trsp, trsp, trsp, trsp, 1110, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 603, trsp, trsp, trsp, trsp, 1109, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, 571, trsp, trsp, 839, trsp, trsp, trsp, 744, 745, 746, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 747, 748, 749, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
             };
 
     // create the tilemap from the level definition
@@ -416,7 +405,6 @@ int main() {
                 window.close();
         }
 
-
         // Should create a function to handle that?
         if (hero.rect.getPosition().x + 24 > screenDimension.x / 2)
             position.x = hero.rect.getPosition().x + 24;
@@ -426,7 +414,6 @@ int main() {
             position.x = 912 - (viewSize.x / 2);
         if (hero.rect.getPosition().y + viewSize.y / 2 > 600)
             position.y = 624 - (viewSize.y / 2);
-
 
         view.setCenter(position);
 
@@ -441,9 +428,9 @@ int main() {
         sf::Time elapsedProjectile = clockProjectile.getElapsedTime();
 
         sf::Time elapsedAngry = clockAngry.getElapsedTime();
+        sf::Time elapsedNPC = clockNPC.getElapsedTime();
 
         int enemyCounter = 0;
-
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             hero.setHasSword(true);
@@ -492,115 +479,8 @@ int main() {
                 }
             }
 
-            // Angry enemies
-            int angryCounter = 0;
-            for (auto itr = enemies.begin(); itr != enemies.end(); itr++) {
-                if (enemies[angryCounter].isAngry()) {
-                    if (elapsedAngry.asSeconds() >= 1) {
-                        clockAngry.restart();
-                        int randomNumber = rand();
-                        int tempRand = (randomNumber % 2) + 1;
-                        if (tempRand == 1) { // Fires and chases
-                            projectile.setDamage(enemies[angryCounter].getStrength());
-                            // Player to Right
-                            if ((hero.rect.getPosition().x < enemies[angryCounter].rect.getPosition().x) &&
-                                (abs(hero.rect.getPosition().y - enemies[angryCounter].rect.getPosition().y) <= 30)) {
-                                soundShot.play();
-                                projectile.setHostile(true);
-                                projectile.setDirection(Character::Direction::Left);
-                                projectile.rect.setPosition(enemies[angryCounter].rect.getPosition().x +
-                                                            enemies[angryCounter].rect.getSize().x / 2 -
-                                                            projectile.rect.getSize().x / 2,
-                                                            enemies[angryCounter].rect.getPosition().y +
-                                                            enemies[angryCounter].rect.getSize().y / 2 -
-                                                            projectile.rect.getSize().y / 2);
-                                projectileArray.push_back(projectile);
-                                projectile.setHostile(false);
-
-                                enemies[angryCounter].setDirection(Character::Direction::Left);
-                            }
-
-                            // Player to Left
-                            if ((hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x) &&
-                                (abs(hero.rect.getPosition().y - enemies[angryCounter].rect.getPosition().y) <= 30)) {
-                                soundShot.play();
-                                projectile.setHostile(true);
-                                projectile.setDirection(Character::Direction::Right);
-                                projectile.rect.setPosition(enemies[angryCounter].rect.getPosition().x +
-                                                            enemies[angryCounter].rect.getSize().x / 2 -
-                                                            projectile.rect.getSize().x / 2,
-                                                            enemies[angryCounter].rect.getPosition().y +
-                                                            enemies[angryCounter].rect.getSize().y / 2 -
-                                                            projectile.rect.getSize().y / 2);
-                                projectileArray.push_back(projectile);
-                                projectile.setHostile(false);
-
-                                enemies[angryCounter].setDirection(Character::Direction::Right);
-                            }
-
-                            // Player to Top
-                            if ((hero.rect.getPosition().y < enemies[angryCounter].rect.getPosition().y) &&
-                                (abs(hero.rect.getPosition().x - enemies[angryCounter].rect.getPosition().x) <= 30)) {
-                                soundShot.play();
-                                projectile.setHostile(true);
-                                projectile.setDirection(Character::Direction::Up);
-                                projectile.rect.setPosition(enemies[angryCounter].rect.getPosition().x +
-                                                            enemies[angryCounter].rect.getSize().x / 2 -
-                                                            projectile.rect.getSize().x / 2,
-                                                            enemies[angryCounter].rect.getPosition().y +
-                                                            enemies[angryCounter].rect.getSize().y / 2 -
-                                                            projectile.rect.getSize().y / 2);
-                                projectileArray.push_back(projectile);
-                                projectile.setHostile(false);
-
-                                enemies[angryCounter].setDirection(Character::Direction::Up);
-                            }
-
-                            // Player to Bottom
-                            if ((hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y) &&
-                                (abs(hero.rect.getPosition().x - enemies[angryCounter].rect.getPosition().x) <= 30)) {
-                                soundShot.play();
-                                projectile.setHostile(true);
-                                projectile.setDirection(Character::Direction::Down);
-                                projectile.rect.setPosition(enemies[angryCounter].rect.getPosition().x +
-                                                            enemies[angryCounter].rect.getSize().x / 2 -
-                                                            projectile.rect.getSize().x / 2,
-                                                            enemies[angryCounter].rect.getPosition().y +
-                                                            enemies[angryCounter].rect.getSize().y / 2 -
-                                                            projectile.rect.getSize().y / 2);
-                                projectileArray.push_back(projectile);
-                                projectile.setHostile(false);
-
-                                enemies[angryCounter].setDirection(Character::Direction::Down);
-                            }
-                        } else if (tempRand == 2) { // Enemy Chases Player
-                            if (hero.rect.getPosition().y < enemies[angryCounter].rect.getPosition().y) {
-                                enemies[angryCounter].setDirection(Character::Direction::Up);
-                            } else if (hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x) {
-                                enemies[angryCounter].setDirection(Character::Direction::Right);
-                            } else if (hero.rect.getPosition().x < enemies[angryCounter].rect.getPosition().x) {
-                                enemies[angryCounter].setDirection(Character::Direction::Left);
-                            } else if (hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y) {
-                                enemies[angryCounter].setDirection(Character::Direction::Down);
-                            }
-                        } else { // Enemy Chases Player
-                            if (hero.rect.getPosition().x < enemies[angryCounter].rect.getPosition().x) {
-                                enemies[angryCounter].setDirection(Character::Direction::Left);
-                            } else if (hero.rect.getPosition().x > enemies[angryCounter].rect.getPosition().x) {
-                                enemies[angryCounter].setDirection(Character::Direction::Right);
-                            } else if (hero.rect.getPosition().y < enemies[angryCounter].rect.getPosition().y) {
-                                enemies[angryCounter].setDirection(Character::Direction::Up);
-                            } else if (hero.rect.getPosition().y > enemies[angryCounter].rect.getPosition().y) {
-                                enemies[angryCounter].setDirection(Character::Direction::Down);
-                            }
-                        }
-
-                    }
-                }
-
-                angryCounter++;
-            }
-
+            // Enemies attack
+            strategy.EnemyAttack(enemies, elapsedAngry, clockAngry, projectile, hero, soundShot, projectileArray);
 
             hero.update();
             hero.moveSprite(levelVisible);
@@ -663,6 +543,9 @@ int main() {
                         break;
                 }
             }
+
+            // NPC attack
+            strategy.NPCAttack(buddy, elapsedNPC, clockNPC, projectile, enemies, soundShot, projectileArray);
 
             // Check projectile-enemy collision
             int pcounter = 0;
@@ -927,6 +810,11 @@ int main() {
         }
 
         window.display();
+
+        if ( hero.getHealth() <= 0){
+            settings.GameOver(window);
+            return 0;
+        }
     }
 
     return 0;

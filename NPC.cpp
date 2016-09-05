@@ -118,37 +118,45 @@ bool NPC::collidesRight(const int* level) {
 
 bool NPC::checkCollision(int tile) {
     switch (tile) {
-        case 1102:
+        case 496:
             return true;
-        case 1103:
+        case 460:
             return true;
-        case 1171:
+        case 497:
             return true;
-        case 1172:
+        case 609:
             return true;
-        case 1180:
+        case 1080:
             return true;
-        case 1181:
+        case 1081:
             return true;
-        case 1182:
+        case 571:
             return true;
-        case 1183:
+        case 839:
             return true;
-        case 1212:
+        case 563:
             return true;
-        case 1220:
+        case 603:
             return true;
-        case 1221:
+        case 1110:
             return true;
-        case 1222:
+        case 1109:
             return true;
-        case 1223:
+        case 474:
             return true;
-        case 1224:
+        case 514:
             return true;
-        case 1225:
+        case 744:
             return true;
-        case 1331:
+        case 745:
+            return true;
+        case 746:
+            return true;
+        case 747:
+            return true;
+        case 748:
+            return true;
+        case 749:
             return true;
         default:
             return false;
