@@ -10,7 +10,7 @@
 #include "Settings.h"
 #include "StatusBar.h"
 #include "Strategy.h"
-#include "Potion.h"
+#include "Game.h"
 
 int main() {
 
@@ -20,21 +20,17 @@ int main() {
 
     Gamestate gameState = Initialize;
 
+    Game game;
     Settings settings;
-
     Strategy strategy;
 
-    const int erba = 1044;
-    const int trsp = 1300;
-    bool isAnimating = false;
-    bool startAnimation = false;
-    bool halfAnimation = false;
-
+    // Screen dimesions
     sf::Vector2u screenDimension(800, 600);
 
-    // create the window
+    // Create the window
     sf::RenderWindow window(sf::VideoMode(screenDimension.x, screenDimension.y), "Videogame", sf::Style::None);
 
+    // Center the window
     sf::Vector2i positionWindow((sf::VideoMode::getDesktopMode().width / 2) - screenDimension.x / 2,
                                 (sf::VideoMode::getDesktopMode().height / 2) - screenDimension.y / 2);
     window.setPosition(positionWindow);
@@ -42,8 +38,7 @@ int main() {
 
     int choosenCharacter = 0;
 
-    sf::Font font;
-    font.loadFromFile("PrinceValiant.ttf");
+    game.setFont();
 
     sf::Text name;
     name.setColor(sf::Color::Black);
@@ -56,7 +51,7 @@ int main() {
         settings.showSplash(window);
         window.clear();
         settings.showOptions(window, choosenCharacter);
-        settings.inputName(str, name, window, font, choosenCharacter);
+        settings.inputName(str, name, window, game.font, choosenCharacter);
         name.setCharacterSize(18);
         name.setPosition(12, 180);
         window.clear();
@@ -71,434 +66,76 @@ int main() {
     sf::Vector2f position(screenDimension.x / 2, screenDimension.y / 2);
     sf::Vector2f viewSize = view.getSize();
 
-    // Clock for projectiles
-    sf::Clock clockProjectile;
+    game.loadTextures(choosenCharacter, chooseNPC);
 
-    // Clock for angry enemies
-    sf::Clock clockAngry;
-    // Clock for NPC
-    sf::Clock clockNPC;
+    // Load music & sound effects
+    game.setMusic();
 
-    // load player texture
-    sf::Texture texturePlayer;
-    if (choosenCharacter == 0) {
-        if (!texturePlayer.loadFromFile("HeroTile.png")) {
-            return EXIT_FAILURE;
-        }
-    } else if (choosenCharacter == 1) {
-        if (!texturePlayer.loadFromFile("WitchTile.png")) {
-            return EXIT_FAILURE;
-        }
-    }
-    else if (choosenCharacter == 2) {
-        if (!texturePlayer.loadFromFile("CoolHeroTile.png")) {
-            return EXIT_FAILURE;
-        }
-    }
-
-    // load NPC texture
-    sf::Texture textureNPC;
-    if (chooseNPC == 0) {
-        if (!textureNPC.loadFromFile("Sheep.png")) {
-            return EXIT_FAILURE;
-        }
-    }
-    else if (chooseNPC == 1) {
-        if (!textureNPC.loadFromFile("Dog.png")) {
-            return EXIT_FAILURE;
-        }
-    }
-    else if (chooseNPC == 2) {
-        if (!textureNPC.loadFromFile("Cock.png")) {
-            return EXIT_FAILURE;
-        }
-    }
-
-    // load enemy texture
-    sf::Texture textureAssassin;
-    if (!textureAssassin.loadFromFile("Assassin.png")) {
-        return EXIT_FAILURE;
-    }
-    sf::Texture textureDarkLord;
-    if (!textureDarkLord.loadFromFile("DarkLord.png")) {
-        return EXIT_FAILURE;
-    }
-
-    sf::Texture textureChaos;
-    if (!textureChaos.loadFromFile("ChaosKnight.png")) {
-        return EXIT_FAILURE;
-    }
-
-    sf::Texture textureChimera;
-    if (!textureChimera.loadFromFile("Chimera.png")) {
-        return EXIT_FAILURE;
-    }
-
-    sf::Texture textureZombie;
-    if (!textureZombie.loadFromFile("Zombie.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load fireball texture
-    sf::Texture textureFireBall;
-    if (!textureFireBall.loadFromFile("fireball.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load coin texture
-    sf::Texture textureCoin;
-    if (!textureCoin.loadFromFile("coin.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load profile texture
-    sf::Texture textureProfile;
-    if (!textureProfile.loadFromFile("Head.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load name texture
-    sf::Texture textureName;
-    if (!textureName.loadFromFile("Name.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load heart texture
-    sf::Texture textureHeart;
-    if (!textureHeart.loadFromFile("Hearts.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load experience texture
-    sf::Texture textureExp;
-    if (!textureExp.loadFromFile("Experience.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load money texture
-    sf::Texture textureMoney;
-    if (!textureMoney.loadFromFile("Money.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load Sword texture
-    sf::Texture textureSword;
-    if (!textureSword.loadFromFile("Sword48.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load Stick texture
-    sf::Texture textureStick;
-    if (!textureStick.loadFromFile("Catalyst48.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load Axe texture
-    sf::Texture textureAxe;
-    if (!textureAxe.loadFromFile("Axe48.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load weapon texture
-    sf::Texture textureWeapon;
-    if (!textureWeapon.loadFromFile("WeaponsSheet.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load potion texture
-    sf::Texture texturePotion;
-    if (!texturePotion.loadFromFile("PotionsSheet.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // load scroll texture
-    sf::Texture textureScroll;
-    if (!textureScroll.loadFromFile("ScrollsSheet.png")) {
-        return EXIT_FAILURE;
-    }
-
-    // Load music
-    sf::Music music;
-    if (!music.openFromFile("Elite4Cut.ogg")) {
-        return EXIT_FAILURE;
-    }
-
-    // Weapons
-    Weapon sword(20, "sword");
-    Weapon axe(40, "axe");
-    Weapon stick(15, "stick");
-
-    // Potions
-    Potion redPotion(8, 2);
-    Potion bluePotion(4, 4);
-    Potion greenPotion(2, 8);
-
-    // Play music
-    music.play();
-    music.setLoop(true);
-    music.setVolume(20);
-
-    // Sound effects
-    sf::SoundBuffer bufferShot;
-    if (!bufferShot.loadFromFile("shot.ogg"))
-        return -1;
-    sf::Sound soundShot;
-    soundShot.setBuffer(bufferShot);
-    soundShot.setVolume(10);
-
+    // Set Hero
     Hero hero(8, 100, str, 200, 0);
+    hero.sprite.setTexture(game.texturePlayer);
 
-    hero.sprite.setTexture(texturePlayer);
-
+    // Enemies
     std::vector<Item> items;
+    game.setItems();
 
-    Item coinItem;
-    coinItem.setType("coin");
-    coinItem.rect.setSize(sf::Vector2f(32, 32));
-    coinItem.sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
-    coinItem.sprite.setTexture(textureCoin);
-
-    Item swordItem;
-    swordItem.setType("sword");
-    swordItem.rect.setSize(sf::Vector2f(48, 48));
-    swordItem.sprite.setTextureRect(sf::IntRect(0, 0, 48, 48));
-    swordItem.sprite.setTexture(textureSword);
-
-    Item stickItem;
-    stickItem.setType("stick");
-    stickItem.rect.setSize(sf::Vector2f(48, 48));
-    stickItem.sprite.setTextureRect(sf::IntRect(0, 0, 48, 48));
-    stickItem.sprite.setTexture(textureStick);
-
-    Item axeItem;
-    axeItem.setType("axe");
-    axeItem.rect.setSize(sf::Vector2f(48, 48));
-    axeItem.sprite.setTextureRect(sf::IntRect(0, 0, 48, 48));
-    axeItem.sprite.setTexture(textureAxe);
-
+    // NPC
     NPC buddy(100, 1);
     buddy.rect.setPosition(200, 400);
-    buddy.sprite.setTexture(textureNPC);
+    buddy.sprite.setTexture(game.textureNPC);
 
     // Vector of enemies
     std::vector<Mob> enemies;
-
-    //First enemy
-    Mob darkLord(40, 1, 4);
-    darkLord.rect.setPosition(200, 400);
-    darkLord.sprite.setTexture(textureDarkLord);
-    enemies.push_back(darkLord);
-
-    //Second enemy
-    Mob assassin(40, 1, 2);
-    assassin.rect.setPosition(300, 500);
-    assassin.sprite.setTexture(textureAssassin);
-    enemies.push_back(assassin);
-
-    //Third enemy
-    Mob zombie(40, 1, 3);
-    zombie.rect.setPosition(700, 350);
-    zombie.sprite.setTexture(textureZombie);
-    enemies.push_back(zombie);
-
-    //Fourth enemy
-    Mob chimera(40, 1, 5);
-    chimera.rect.setPosition(500, 550);
-    chimera.sprite.setTexture(textureChimera);
-    enemies.push_back(chimera);
-
-    //Fifth enemy
-    Mob chaosKnight(40, 1, 10);
-    chaosKnight.rect.setPosition(500, 200);
-    chaosKnight.sprite.setTexture(textureChaos);
-    enemies.push_back(chaosKnight);
+    game.setEnemies();
+    enemies.push_back(game.darkLord);
+    enemies.push_back(game.assassin);
+    enemies.push_back(game.zombie);
+    enemies.push_back(game.chimera);
+    enemies.push_back(game.chaosKnight);
 
     // Vector of projectiles
     std::vector<Projectile> projectileArray;
     Projectile projectile;
-    projectile.sprite.setTexture(textureFireBall);
+    projectile.sprite.setTexture(game.textureFireBall);
 
-    // Head sprite
-    sf::Sprite headSprite;
-    headSprite.setTexture(textureProfile);
-    headSprite.setTextureRect(sf::IntRect(choosenCharacter * 150, 0, 150, 164));
-    headSprite.setPosition(0, 0);
+    // Personalize Hero
+    game.setSprites(choosenCharacter);
+    game.setHeroText(hero);
+    game.personalizeHero(hero, choosenCharacter);
+    game.setHeroBar(hero);
 
-    // Name sprite
-    sf::Sprite nameSprite;
-    nameSprite.setTexture(textureName);
-    nameSprite.setTextureRect(sf::IntRect(0, 0, 150, 54));
-    nameSprite.setPosition(0, 164);
-
-    // Hearts sprite
-    sf::Sprite heartsSprite;
-    heartsSprite.setTexture(textureHeart);
-    heartsSprite.setTextureRect(sf::IntRect(0, 0, 150, 36));
-    heartsSprite.setPosition(0, 218);
-
-    // Experience sprite
-    sf::Sprite expSprite;
-    expSprite.setTexture(textureExp);
-    expSprite.setTextureRect(sf::IntRect(0, 0, 150, 59));
-    expSprite.setPosition(0, 254);
-
-    // Money sprite
-    sf::Sprite moneySprite;
-    moneySprite.setTexture(textureMoney);
-    moneySprite.setTextureRect(sf::IntRect(0, 0, 150, 61));
-    moneySprite.setPosition(0, 313);
-
-    // Weapons sprite
-    sf::Sprite weaponsSprite;
-    weaponsSprite.setTexture(textureWeapon);
-    weaponsSprite.setTextureRect(sf::IntRect(0, 0, 150, 76));
-    weaponsSprite.setPosition(0, 374);
-
-    // Potions sprite
-    sf::Sprite potionsSprite;
-    potionsSprite.setTexture(texturePotion);
-    potionsSprite.setTextureRect(sf::IntRect(0, 0, 150, 70));
-    potionsSprite.setPosition(0, 450);
-
-    // Scrolls sprite
-    sf::Sprite scrollsSprite;
-    scrollsSprite.setTexture(textureScroll);
-    scrollsSprite.setTextureRect(sf::IntRect(0, 0, 150, 80));
-    scrollsSprite.setPosition(0, 520);
-
-    // Money text
-    hero.text.setFont(font);
-    hero.text.setString(std::to_string(hero.getMoney()));
-    hero.text.setCharacterSize(30);
-    hero.text.setColor(sf::Color::Red);
-    hero.text.setPosition(80, 315);
-
-    switch (choosenCharacter) {
-        case 0:
-            hero.setWeapon(&sword);
-            weaponsSprite.setTextureRect(sf::IntRect(0, 76, 150, 76));
-            hero.setPotion(&bluePotion);
-            potionsSprite.setTextureRect(sf::IntRect(0, 280, 150, 70));
-            hero.setChangeToSword(true);
-            scrollsSprite.setTextureRect(sf::IntRect(0, 480, 150, 80));
-            hero.setMoney(200);
-            hero.text.setString(std::to_string(hero.getMoney()));
-            break;
-        case 1:
-            hero.setWeapon(&stick);
-            weaponsSprite.setTextureRect(sf::IntRect(0, 152, 150, 76));
-            hero.setPotion(&redPotion);
-            potionsSprite.setTextureRect(sf::IntRect(0, 420, 150, 70));
-            hero.setChangeToStick(true);
-            scrollsSprite.setTextureRect(sf::IntRect(0, 480, 150, 80));
-            hero.setMoney(220);
-            hero.text.setString(std::to_string(hero.getMoney()));
-            break;
-        case 2:
-            hero.setWeapon(&axe);
-            weaponsSprite.setTextureRect(sf::IntRect(0, 228, 150, 76));
-            hero.setPotion(&greenPotion);
-            potionsSprite.setTextureRect(sf::IntRect(0, 350, 150, 70));
-            hero.setChangeToAxe(true);
-            scrollsSprite.setTextureRect(sf::IntRect(0, 480, 150, 80));
-            hero.setMoney(250);
-            hero.text.setString(std::to_string(hero.getMoney()));
-            break;
-    }
-
-    // Set Hearts, Exp, Weapon and Potion sprites
-    hero.setHeartsSprite(heartsSprite);
-    hero.setExpSprite(expSprite);
-    hero.setWeaponSprite(weaponsSprite);
-    hero.setPotionsSprite(potionsSprite);
-
-    // Define the level with an array of tile indices
-    const int levelBackground[] =
-            {
-                    1044, 1044, 1044, 1044, 1052, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053,
-                    1053, 1053, 1054,
-                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 849, 850, 850, 850, 850, 850, 850, 850, 850, 851, erba, erba,
-                    erba,
-                    erba, erba, erba, erba, erba, erba, 852, 857, 857, 857, 857, 857, 857, 857, 857, 853, erba, erba,
-                    erba,
-                    erba, erba, erba, erba, erba, erba, 852, 857, 855, 855, 855, 855, 855, 855, 855, 856, erba, erba,
-                    erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba,
-            };
-
-    // create the tilemap from the level definition
+    // Mappa Background
     TileMap mapBackground;
-    if (!mapBackground.load("TileMap.png", sf::Vector2u(48, 48), levelBackground, 19, 13))
+    if (!mapBackground.load("TileMap.png", sf::Vector2u(48, 48), game.levelBackground, 19, 13))
         return -1;
 
-    const int levelVisible[] =
-            {
-                    trsp, trsp, trsp, trsp, trsp, trsp, 496, trsp, trsp, 484, trsp, trsp, 460, trsp, 497, trsp, trsp,
-                    460, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1080, trsp, trsp, trsp, 609, trsp, trsp, trsp,
-                    trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 474,
-                    trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, 1081, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 514,
-                    trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 563, trsp, trsp, trsp, trsp, 1110, trsp, trsp,
-                    trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 603, trsp, trsp, trsp, trsp, 1109, trsp, trsp,
-                    trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, 571, trsp, trsp, 839, trsp, trsp, trsp, 744, 745, 746, trsp, trsp,
-                    trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 747, 748, 749, trsp, trsp,
-                    trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp,
-            };
-
-    // create the tilemap from the level definition
+    // Mappa Visibile
     TileMap mapVisible;
-    if (!mapVisible.load("TileMap.png", sf::Vector2u(48, 48), levelVisible, 19, 13))
+    if (!mapVisible.load("TileMap.png", sf::Vector2u(48, 48), game.levelVisible, 19, 13))
         return -1;
 
+    // Inizializza gli observer
     ExperienceBar experienceBar(&hero);
     HealthBar healthBar(&hero);
     MoneyBar moneyBar(&hero);
     WeaponBar weaponBar(&hero);
     PotionBar potionBar(&hero);
 
-    // run the main loop
+    // Inizializza valori bool per animazione spada
+    bool isAnimating = false;
+    bool startAnimation = false;
+    bool halfAnimation = false;
+
+    // MAIN LOOP
     while (window.isOpen()) {
-        // handle events
+
         sf::Event event;
         while (window.pollEvent(event)) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 window.close();
         }
 
-        // Should create a function to handle that?
+        // Setting View
         if (hero.rect.getPosition().x + 24 > screenDimension.x / 2)
             position.x = hero.rect.getPosition().x + 24;
         if (hero.rect.getPosition().y + 24 > screenDimension.y / 2)
@@ -509,26 +146,26 @@ int main() {
             position.y = 624 - (viewSize.y / 2);
 
         view.setCenter(position);
-
         window.setView(view);
 
         window.clear();
 
-        // draw the map
+        // Draw the map
         window.draw(mapBackground);
         window.draw(mapVisible);
 
-        sf::Time elapsedProjectile = clockProjectile.getElapsedTime();
-
-        sf::Time elapsedAngry = clockAngry.getElapsedTime();
-        sf::Time elapsedNPC = clockNPC.getElapsedTime();
+        sf::Time elapsedProjectile = game.clockProjectile.getElapsedTime();
+        sf::Time elapsedAngry = game.clockAngry.getElapsedTime();
+        sf::Time elapsedNPC = game.clockNPC.getElapsedTime();
 
         int enemyCounter = 0;
 
+        // Weapon Animation
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             startAnimation = true;
         }
 
+        // Game in pause
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
             if (gameState == Playing) {
                 gameState = Pause;
@@ -537,17 +174,17 @@ int main() {
             }
         }
 
+        // Use potions
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && hero.getPotion()->getUseTime() > 0) {
             hero.setHealth(hero.getHealth() + hero.getPotion()->getRecovery());
-            if(hero.getHealth() > 8)
+            if (hero.getHealth() > 8)
                 hero.setHealth(8);
             hero.getPotion()->setUseTime(hero.getPotion()->getUseTime() - 1);
             hero.notify();
         }
 
-
+        // Weapon Animation
         if (gameState == Playing) {
-            // Weapon Animation
             if (startAnimation) {
                 if (!isAnimating) {
                     hero.useWeapon();
@@ -564,24 +201,26 @@ int main() {
             }
 
             // Enemies attack
-            strategy.EnemyAttack(enemies, elapsedAngry, clockAngry, projectile, hero, soundShot, projectileArray);
+            strategy.EnemyAttack(enemies, elapsedAngry, game.clockAngry, projectile, hero, game.soundShot,
+                                 projectileArray);
 
             hero.update();
-            hero.moveSprite(levelVisible);
+            hero.moveSprite(game.levelVisible);
 
             if (elapsedProjectile.asSeconds() >= 0.25) {
-                clockProjectile.restart();
-                strategy.HeroShot(hero, soundShot, projectileArray, projectile);
+                game.clockProjectile.restart();
+                strategy.HeroShot(hero, game.soundShot, projectileArray, projectile);
             }
 
             // NPC attack
-            strategy.NPCAttack(buddy, elapsedNPC, clockNPC, projectile, enemies, soundShot, projectileArray);
+            strategy.NPCAttack(buddy, elapsedNPC, game.clockNPC, projectile, enemies, game.soundShot, projectileArray);
 
             // Check projectile-enemy collision
-            strategy.Projectile_EnemyCollision(enemies, projectile, projectileArray, items, coinItem);
+            strategy.Projectile_EnemyCollision(enemies, projectile, projectileArray, items, game.coinItem);
 
             // Check weapons' collisions
-            strategy.WeaponsCollisions(enemies, hero, isAnimating, items, coinItem, swordItem, stickItem, axeItem);
+            strategy.WeaponsCollisions(enemies, hero, isAnimating, items, game.coinItem, game.swordItem, game.stickItem,
+                                       game.axeItem);
 
             // Check Hero - Item collisions
             strategy.Hero_ItemsCollisions(hero, items);
@@ -597,22 +236,22 @@ int main() {
 
             // Change weapon
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && hero.isChangeToSword())
-                hero.setWeapon(&sword);
+                hero.setWeapon(&(game.sword));
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::N) && hero.isChangeToStick())
-                hero.setWeapon(&stick);
+                hero.setWeapon(&(game.stick));
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::M) && hero.isChangeToAxe())
-                hero.setWeapon(&axe);
+                hero.setWeapon(&(game.axe));
 
             // Update enemies
             for (auto itr = enemies.begin(); itr != enemies.end(); itr++) {
                 enemies[enemyCounter].update();
-                enemies[enemyCounter].moveSprite(levelVisible);
+                enemies[enemyCounter].moveSprite(game.levelVisible);
                 enemyCounter++;
             }
 
             // Update NPC
             buddy.update();
-            buddy.moveSprite(levelVisible);
+            buddy.moveSprite(game.levelVisible);
         }
 
         // Draw Player
@@ -674,14 +313,14 @@ int main() {
         window.setView(window.getDefaultView());
 
         // Draw Status Bar
-        window.draw(headSprite);
-        window.draw(nameSprite);
+        window.draw(game.headSprite);
+        window.draw(game.nameSprite);
         window.draw(hero.getHeartsSprite());
         window.draw(hero.getExpSprite());
-        window.draw(moneySprite);
+        window.draw(game.moneySprite);
         window.draw(hero.getWeaponSprite());
         window.draw(hero.getPotionsSprite());
-        window.draw(scrollsSprite);
+        window.draw(game.scrollsSprite);
         window.draw(name);
         window.draw(hero.text);
 
@@ -697,7 +336,8 @@ int main() {
 
         window.display();
 
-        if ( hero.getHealth() <= 0){
+        // GAME OVER
+        if (hero.getHealth() <= 0) {
             settings.GameOver(window);
             return 0;
         }

@@ -88,7 +88,7 @@ private:
 
 class Item {
 public:
-    Item() { };
+    Item(std::string type, int value=0) : value(value), type(type) { };
     sf::Texture texture;
     sf::Sprite sprite;
     sf::RectangleShape rect;
