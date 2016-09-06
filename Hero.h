@@ -9,8 +9,8 @@
 class Hero : public Character, public Subject {
 public:
 
-    Hero(int lifeP, int strngth, int energy, std::string name, int mon, int lvl, int exp) :
-            Character(lifeP, strngth, energy), name(name), money(mon), heroLevel(lvl), exp(exp) {
+    Hero(int lifeP, int strngth, std::string name, int mon, int exp) :
+            Character(lifeP, strngth), name(name), money(mon), exp(exp) {
         rect.setSize(sf::Vector2f(64, 64));
         rect.setPosition(437, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 64, 0, 64, 64));
@@ -22,39 +22,26 @@ public:
     }
 
     void useWeapon();
+
     void hit();
-
-    /*
-    int levelUp();
-
-    virtual void useWeapon(Character &tmpEnemy);
-
-    virtual void useSpecial(Character &tmpEnemy);
-
-    virtual void useScroll(Character &tmpEnemy);
-
-    */
 
     void update();
 
-    void moveSprite(const int* level);
+    void moveSprite(const int *level);
 
-    bool collidesUp(const int* level);
+    bool collidesUp(const int *level) override;
 
-    bool collidesDown(const int* level);
+    bool collidesDown(const int *level) override;
 
-    bool collidesLeft(const int* level);
+    bool collidesLeft(const int *level) override;
 
-    bool collidesRight(const int* level);
+    bool collidesRight(const int *level) override;
 
-    bool checkCollision(int tile);
+    virtual void subscribe(Observer *o) override;
 
-    virtual void subscribe(Observer* o) override;
-    virtual void unsubscribe(Observer* o) override;
+    virtual void unsubscribe(Observer *o) override;
+
     virtual void notify() override;
-
-
-    bool outOfbounds(Direction direction);
 
     int getMoney() const {
         return money;
@@ -70,14 +57,6 @@ public:
 
     void setName(const std::string &name) {
         Hero::name = name;
-    }
-
-    int getHeroLevel() const {
-        return heroLevel;
-    }
-
-    void setHeroLevel(int heroLevel) {
-        Hero::heroLevel = heroLevel;
     }
 
     int getExp() const {
@@ -96,14 +75,6 @@ public:
         Hero::direction = direction;
     }
 
-
-    bool isHasSword() const {
-        return hasSword;
-    }
-
-    void setHasSword(bool hasSword) {
-        Hero::hasSword = hasSword;
-    }
 
     int getAdder() const {
         return adder;
@@ -189,17 +160,16 @@ public:
 
 private:
     std::string name;
-    int money, heroLevel, exp;
-    bool hasSword = false;
+    int money, exp;
     int maxCounter = 2;
     int adder = 0;
-    std::list <Observer*> observers;
+    std::list<Observer *> observers;
     sf::Sprite heartsSprite;
     sf::Sprite expSprite;
     sf::Sprite weaponSprite;
     sf::Sprite potionsSprite;
-    Weapon* weapon;
-    Potion* potion;
+    Weapon *weapon;
+    Potion *potion;
     bool changeToSword = false;
     bool changeToAxe = false;
     bool changeToStick = false;

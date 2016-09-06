@@ -1,4 +1,3 @@
-#include <iostream>
 #include "StatusBar.h"
 
 HealthBar::HealthBar(Hero *hero) : subject(hero) {
@@ -18,8 +17,8 @@ void HealthBar::detach() {
 }
 
 void HealthBar::update() {
-    sf::Sprite tmpSprite = subject -> getHeartsSprite();
-    if(subject->getHealth() >= 8){
+    sf::Sprite tmpSprite = subject->getHeartsSprite();
+    if (subject->getHealth() >= 8) {
         tmpSprite.setTextureRect(sf::IntRect(0, 0, 150, 36));
         subject->setHeartsSprite(tmpSprite);
     } else {
@@ -45,16 +44,16 @@ void ExperienceBar::detach() {
 }
 
 void ExperienceBar::update() {
-    sf::Sprite tmpSprite = subject -> getExpSprite();
-    tmpSprite.setTextureRect(sf::IntRect(0, subject -> getExp() * 59, 150, 59));
-    subject -> setExpSprite(tmpSprite);
+    sf::Sprite tmpSprite = subject->getExpSprite();
+    tmpSprite.setTextureRect(sf::IntRect(0, subject->getExp() * 59, 150, 59));
+    subject->setExpSprite(tmpSprite);
 }
 
-MoneyBar::MoneyBar (Hero *hero) : subject(hero) {
+MoneyBar::MoneyBar(Hero *hero) : subject(hero) {
     MoneyBar::attach();
 }
 
-MoneyBar::~MoneyBar () {
+MoneyBar::~MoneyBar() {
     MoneyBar::detach();
 }
 
@@ -67,7 +66,7 @@ void MoneyBar::detach() {
 }
 
 void MoneyBar::update() {
-    subject -> text.setString(std::to_string( subject -> getMoney()));
+    subject->text.setString(std::to_string(subject->getMoney()));
 }
 
 WeaponBar::WeaponBar(Hero *hero) : subject(hero) {
@@ -87,16 +86,16 @@ void WeaponBar::detach() {
 }
 
 void WeaponBar::update() {
-    sf::Sprite tmpSprite = subject -> getWeaponSprite();
-    if(subject->isChangeToSword() && subject->isChangeToStick() && subject->isChangeToAxe())
+    sf::Sprite tmpSprite = subject->getWeaponSprite();
+    if (subject->isChangeToSword() && subject->isChangeToStick() && subject->isChangeToAxe())
         tmpSprite.setTextureRect(sf::IntRect(0, 0, 150, 76));
-    if(subject->isChangeToSword() && subject->isChangeToStick() && !subject->isChangeToAxe())
+    if (subject->isChangeToSword() && subject->isChangeToStick() && !subject->isChangeToAxe())
         tmpSprite.setTextureRect(sf::IntRect(0, 380, 150, 76));
-    if(subject->isChangeToSword() && !subject->isChangeToStick() && subject->isChangeToAxe())
+    if (subject->isChangeToSword() && !subject->isChangeToStick() && subject->isChangeToAxe())
         tmpSprite.setTextureRect(sf::IntRect(0, 456, 150, 76));
-    if(!subject->isChangeToSword() && subject->isChangeToStick() && subject->isChangeToAxe())
+    if (!subject->isChangeToSword() && subject->isChangeToStick() && subject->isChangeToAxe())
         tmpSprite.setTextureRect(sf::IntRect(0, 532, 150, 76));
-    subject -> setWeaponSprite(tmpSprite);
+    subject->setWeaponSprite(tmpSprite);
 }
 
 PotionBar::PotionBar(Hero *hero) : subject(hero) {
@@ -116,10 +115,9 @@ void PotionBar::detach() {
 }
 
 void PotionBar::update() {
-    sf::Sprite tmpSprite = subject -> getPotionsSprite();
-    if(subject->getPotion()->getUseTime() <= 0) {
+    sf::Sprite tmpSprite = subject->getPotionsSprite();
+    if (subject->getPotion()->getUseTime() <= 0) {
         tmpSprite.setTextureRect(sf::IntRect(0, 490, 150, 70));
-        std::cout << "FINE!" << std::endl;
     }
     subject->setPotionsSprite(tmpSprite);
 }

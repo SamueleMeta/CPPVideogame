@@ -7,78 +7,88 @@
 
 class HealthBar : public Observer {
 public:
-    HealthBar(Hero* hero);
+    HealthBar(Hero *hero);
 
     virtual ~HealthBar();
 
     virtual void update() override;
+
     virtual void attach() override;
+
     virtual void detach() override;
 
 private:
-    Hero* subject;
+    Hero *subject;
 };
 
 
 class ExperienceBar : public Observer {
 public:
-    ExperienceBar(Hero* hero);
+    ExperienceBar(Hero *hero);
 
     virtual ~ExperienceBar();
 
     virtual void update() override;
+
     virtual void attach() override;
+
     virtual void detach() override;
 
 private:
-    Hero* subject;
+    Hero *subject;
 };
 
 class MoneyBar : public Observer {
 public:
-    MoneyBar(Hero* hero);
+    MoneyBar(Hero *hero);
 
     virtual ~MoneyBar();
 
     virtual void update() override;
+
     virtual void attach() override;
+
     virtual void detach() override;
 
 private:
-    Hero* subject;
+    Hero *subject;
 };
 
 class WeaponBar : public Observer {
 public:
-    WeaponBar(Hero* hero);
+    WeaponBar(Hero *hero);
 
     virtual ~WeaponBar();
 
     virtual void update() override;
+
     virtual void attach() override;
+
     virtual void detach() override;
 
 private:
-    Hero* subject;
+    Hero *subject;
 };
 
 class PotionBar : public Observer {
 public:
-    PotionBar(Hero* hero);
+    PotionBar(Hero *hero);
 
     virtual ~PotionBar();
 
     virtual void update() override;
+
     virtual void attach() override;
+
     virtual void detach() override;
 
 private:
-    Hero* subject;
+    Hero *subject;
 };
 
 class Item {
 public:
-    Item(){};
+    Item() { };
     sf::Texture texture;
     sf::Sprite sprite;
     sf::RectangleShape rect;
@@ -129,4 +139,5 @@ private:
     bool tooken = false;
     std::string type;
 };
+
 #endif //PROJECTVIDEOGAME_STATUSBAR_H

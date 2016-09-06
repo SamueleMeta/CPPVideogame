@@ -6,7 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/StatusBar.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Subject.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/StatusBar.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Scroll.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Mob.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/NPC.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Settings.cpp" isTestSource="false" />
@@ -21,7 +20,6 @@
       <sourceFolder url="file://$MODULE_DIR$/test/runAllTests.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Weapon.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Strategy.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Potion.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Strategy.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Character.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Character.h" isTestSource="false" />

@@ -60,13 +60,13 @@ int Settings::showOptions(sf::RenderWindow &window, int &choosen) {
 
 int Settings::inputName(std::string &str, sf::Text &name, sf::RenderWindow &window, sf::Font &font, int const choosen) {
     sf::Texture nameTexture;
-    if (!nameTexture.loadFromFile("InsertName.png")){
+    if (!nameTexture.loadFromFile("InsertName.png")) {
         return EXIT_FAILURE;
     }
     sf::Sprite sprite(nameTexture);
 
     sf::Texture PGTexture;
-    if (!PGTexture.loadFromFile("144Portrait.png")){
+    if (!PGTexture.loadFromFile("144Portrait.png")) {
         return EXIT_FAILURE;
     }
     sf::Sprite PGSprite;

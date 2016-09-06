@@ -8,6 +8,7 @@ class Projectile {
 public:
 
     Projectile();
+
     void update();
 
     float getMovementSpeed() const {

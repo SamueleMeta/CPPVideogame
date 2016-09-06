@@ -6,50 +6,22 @@
 
 class Mob : public Character {
 public:
-    enum EnemyType {Ogre, Orc, Willowisp, Succubus, Soldier, Skeleton, Undead, Samurai, Demon, Spirit, Abomination, Dragon};
 
-    Mob(int lPoints, int strgth, int energy, Mob::EnemyType t, float drop, int lvl, bool boss) :
-            Character(lPoints, strgth, energy), enemyType(t), dropRate(drop), level(lvl), isBoss(boss) {
+    Mob(int lPoints, int strgth, float drop) : Character(lPoints, strgth), dropRate(drop) {
         rect.setSize(sf::Vector2f(48, 48));
         sprite.setTextureRect(sf::IntRect(counterWalking * 48, 0, 48, 48));
     }
 
-    ~Mob() {}
-
-    /*void drop(Hero& hero);
-
-    virtual void useWeapon(Character& tmpEnemy);
-
-    virtual void useSpecial(Character& tmpEnemy);
-
-    virtual void useScroll(Character& tmpEnemy);
-     */
+    ~Mob() { }
 
     void update();
 
-    void moveSprite(const int* level);
+    void moveSprite(const int *level);
 
     int generateRandom(int max);
 
-    bool collidesUp(const int* level);
+    bool outOfbounds(Direction direction) override;
 
-    bool collidesDown(const int* level);
-
-    bool collidesLeft(const int* level);
-
-    bool collidesRight(const int* level);
-
-    bool checkCollision(int tile);
-
-    bool outOfbounds(Direction direction);
-
-    EnemyType getEnemyType() const {
-        return enemyType;
-    }
-
-    void setEnemyType(EnemyType enemyType) {
-        Mob::enemyType = enemyType;
-    }
 
     float getDropRate() const {
         return dropRate;
@@ -59,21 +31,6 @@ public:
         Mob::dropRate = dropRate;
     }
 
-    int getLevel() const {
-        return level;
-    }
-
-    void setLevel(int level) {
-        Mob::level = level;
-    }
-
-    bool isIsBoss() const {
-        return isBoss;
-    }
-
-    void setIsBoss(bool isBoss) {
-        Mob::isBoss = isBoss;
-    }
 
     bool isAlive() const {
         return alive;
@@ -100,9 +57,6 @@ public:
         Mob::direction = direction;
     }
 
-    EnemyType getOgre() const {
-        return Ogre;
-    }
 
     bool isCollLeft() const {
         return collLeft;
@@ -137,10 +91,7 @@ public:
     }
 
 private:
-    Mob::EnemyType enemyType;
     float dropRate;
-    int level;
-    bool isBoss;
     float movementSpeed = 1.7;
     int movementLength = 100;
     int counter = 0;

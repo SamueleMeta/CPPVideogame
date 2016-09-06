@@ -6,8 +6,7 @@ Projectile::Projectile() {
     sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 }
 
-void Projectile::update()
-{
+void Projectile::update() {
     if (direction == Character::Direction::Up) {
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterAnimation * 32, 3 * 32, 32, 32));
@@ -26,14 +25,12 @@ void Projectile::update()
     }
 
     counterLifetime++;
-    if (counterLifetime >= lifeTime)
-    {
+    if (counterLifetime >= lifeTime) {
         destroy = true;
     }
 
     counterAnimation++;
-    if (counterAnimation >= 2)
-    {
+    if (counterAnimation >= 2) {
         counterAnimation = 0;
     }
 

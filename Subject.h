@@ -6,10 +6,13 @@
 
 class Subject {
 public:
-    virtual ~Subject() {}
+    virtual ~Subject() { }
 
-    virtual void subscribe(Observer* o) = 0;
-    virtual void unsubscribe(Observer* o) = 0;
+    virtual void subscribe(Observer *o) = 0;
+
+    virtual void unsubscribe(Observer *o) = 0;
+
     virtual void notify() = 0;
 };
+
 #endif //PROJECTVIDEOGAME_SUBJECT_H

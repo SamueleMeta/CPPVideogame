@@ -5,12 +5,12 @@ void Hero::update() {
     sprite.setPosition(rect.getPosition());
 }
 
-void Hero::moveSprite(const int* level) {
-    if(weapon->getType() == "sword"){
+void Hero::moveSprite(const int *level) {
+    if (weapon->getType() == "sword") {
         adder = 192;
-    } else if(weapon->getType() == "stick") {
+    } else if (weapon->getType() == "stick") {
         adder = 576;
-    } else if(weapon->getType() == "axe"){
+    } else if (weapon->getType() == "axe") {
         adder = 384;
     }
 
@@ -127,107 +127,41 @@ void Hero::moveSprite(const int* level) {
 
     counterWalking++;
 
-    if (counterWalking == maxCounter){
+    if (counterWalking == maxCounter) {
         counterWalking = 0;
     }
 }
 
-bool Hero::outOfbounds(Direction direction) {
-    switch (direction) {
-        case Direction::Up:
-            if (static_cast<int>(rect.getPosition().y - speed) < 0)
-                return true;
-            return false;
-        case Direction::Down:
-            if (static_cast<int>(rect.getPosition().y + rect.getSize().y + speed) > 624)
-                return true;
-            return false;
-        case Direction::Left:
-            if (static_cast<int>(rect.getPosition().x - speed) < 150)
-                return true;
-            return false;
-        case Direction::Right:
-            if (static_cast<int>(rect.getPosition().x + rect.getSize().x + speed) > 912)
-                return true;
-            return false;
-    }
-}
-
-bool Hero::collidesUp(const int* level) {
+bool Hero::collidesUp(const int *level) {
     int newY = static_cast<int>(rect.getPosition().y - speed + 32);
-    int tile = level[static_cast<int>((rect.getPosition().x + 48) / 48) + static_cast<int>(newY/ 48) * 19];
+    int tile = level[static_cast<int>((rect.getPosition().x + 48) / 48) + static_cast<int>(newY / 48) * 19];
     checkCollision(tile);
 }
 
-bool Hero::collidesDown(const int* level) {
+bool Hero::collidesDown(const int *level) {
     int newY = static_cast<int>(rect.getPosition().y + speed + 48);
-    int tile = level[static_cast<int>((rect.getPosition().x + 32)/48) + static_cast<int>(newY/48) * 19];
+    int tile = level[static_cast<int>((rect.getPosition().x + 32) / 48) + static_cast<int>(newY / 48) * 19];
     checkCollision(tile);
 }
 
-bool Hero::collidesLeft(const int* level) {
+bool Hero::collidesLeft(const int *level) {
     int newX = static_cast<int>(rect.getPosition().x - speed + 32);
-    int tile = level[static_cast<int>(newX/48) + static_cast<int>((rect.getPosition().y + 46)/48) * 19];
+    int tile = level[static_cast<int>(newX / 48) + static_cast<int>((rect.getPosition().y + 46) / 48) * 19];
     checkCollision(tile);
 }
 
-bool Hero::collidesRight(const int* level) {
+bool Hero::collidesRight(const int *level) {
     int newX = static_cast<int>(rect.getPosition().x + speed + 32);
-    int tile = level[static_cast<int>(newX/48) + static_cast<int>((rect.getPosition().y + 46)/48) * 19];
+    int tile = level[static_cast<int>(newX / 48) + static_cast<int>((rect.getPosition().y + 46) / 48) * 19];
     checkCollision(tile);
-}
-
-bool Hero::checkCollision(int tile) {
-    switch (tile) {
-        case 496:
-            return true;
-        case 460:
-            return true;
-        case 497:
-            return true;
-        case 609:
-            return true;
-        case 1080:
-            return true;
-        case 1081:
-            return true;
-        case 571:
-            return true;
-        case 563:
-            return true;
-        case 603:
-            return true;
-        case 1110:
-            return true;
-        case 1109:
-            return true;
-        case 474:
-            return true;
-        case 514:
-            return true;
-        case 744:
-            return true;
-        case 745:
-            return true;
-        case 746:
-            return true;
-        case 747:
-            return true;
-        case 748:
-            return true;
-        case 749:
-            return true;
-        default:
-            return false;
-    }
 }
 
 void Hero::useWeapon() {
-    if(weapon->getType() == "sword"){
+    if (weapon->getType() == "sword") {
         adder = 192;
-    } else if(weapon->getType() == "stick") {
+    } else if (weapon->getType() == "stick") {
         adder = 576;
-    } else if(weapon->getType() == "axe"){
+    } else if (weapon->getType() == "axe") {
         adder = 384;
     }
 
@@ -249,11 +183,11 @@ void Hero::useWeapon() {
 }
 
 void Hero::hit() {
-    if(weapon->getType() == "sword"){
+    if (weapon->getType() == "sword") {
         adder = 192;
-    } else if(weapon->getType() == "stick") {
+    } else if (weapon->getType() == "stick") {
         adder = 576;
-    } else if(weapon->getType() == "axe"){
+    } else if (weapon->getType() == "axe") {
         adder = 384;
     }
 
@@ -283,6 +217,6 @@ void Hero::unsubscribe(Observer *o) {
 }
 
 void Hero::notify() {
-    for(auto itr = std::begin(observers); itr != std::end(observers); itr++)
+    for (auto itr = std::begin(observers); itr != std::end(observers); itr++)
         (*itr)->update();
 }

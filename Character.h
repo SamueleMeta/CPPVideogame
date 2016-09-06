@@ -4,16 +4,29 @@
 #include <SFML/Graphics.hpp>
 #include "Potion.h"
 #include "Weapon.h"
-#include "Scroll.h"
 
 class Character {
 public:
 
-    enum class Direction { Up, Down, Left, Right };
+    enum class Direction {
+        Up, Down, Left, Right
+    };
 
-    Character(int lifePoints, int strgth, int energy) : health(lifePoints), strength(strgth), energy(energy){};
+    Character(int lifePoints, int strgth) : health(lifePoints), strength(strgth) { };
 
-    virtual ~Character() {}
+    virtual ~Character() { }
+
+    virtual bool collidesUp(const int *level);
+
+    virtual bool collidesDown(const int *level);
+
+    virtual bool collidesLeft(const int *level);
+
+    virtual bool collidesRight(const int *level);
+
+    virtual bool checkCollision(int tile);
+
+    virtual bool outOfbounds(Direction direction);
 
     int getHealth() const {
         return health;
@@ -31,14 +44,6 @@ public:
         Character::strength = strength;
     }
 
-    int getEnergy() const {
-        return energy;
-    }
-
-    void setEnergy(int energy) {
-        Character::energy = energy;
-    }
-
     float getSpeed() const {
         return speed;
     }
@@ -53,12 +58,10 @@ public:
 
 protected:
     int health = 8;
-    int strength, energy;
-    //int energyMax = 100;
+    int strength;
     float speed = 2;
     int counterWalking = 0;
     Direction direction = Direction::Down;
-    int counterSword = 0;
 };
 
 #endif //PROJECTVIDEOGAME_CHARACTER_H

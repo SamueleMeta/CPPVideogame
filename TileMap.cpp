@@ -1,6 +1,7 @@
 #include "TileMap.h"
 
-bool TileMap::load(std::string tilename, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height){
+bool TileMap::load(std::string tilename, sf::Vector2u tileSize, const int *tiles, unsigned int width,
+                   unsigned int height) {
     // load the tileset texture
     if (!m_tileset.loadFromFile(tilename))
         return false;
@@ -11,8 +12,7 @@ bool TileMap::load(std::string tilename, sf::Vector2u tileSize, const int* tiles
 
     // populate the vertex array, with one quad per tile
     for (unsigned int i = 0; i < width; ++i)
-        for (unsigned int j = 0; j < height; ++j)
-        {
+        for (unsigned int j = 0; j < height; ++j) {
             // get the current tile number
             int tileNumber = tiles[i + j * width];
 
@@ -21,7 +21,7 @@ bool TileMap::load(std::string tilename, sf::Vector2u tileSize, const int* tiles
             int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
 
             // get a pointer to the current tile's quad
-            sf::Vertex* quad = &m_vertices[(i + j * width) * 4];
+            sf::Vertex *quad = &m_vertices[(i + j * width) * 4];
 
             // define its 4 corners
             quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);

@@ -3,9 +3,9 @@
 
 class Weapon {
 public:
-    Weapon (int strngt, std::string type) : strength(strngt), type(type) {}
+    Weapon(int strngt, std::string type) : strength(strngt), type(type) { }
 
-    virtual ~Weapon() {}
+    virtual ~Weapon() { }
 
     int getStrength() const {
         return strength;

@@ -3,7 +3,7 @@
 
 class Potion {
 public:
-    Potion (int rec, int uses) : recovery (rec), useTime(uses) { };
+    Potion(int rec, int uses) : recovery(rec), useTime(uses) { };
 
     virtual ~Potion() { }
 

@@ -11,7 +11,6 @@
 #include "StatusBar.h"
 #include "Strategy.h"
 #include "Potion.h"
-#include "Scroll.h"
 
 int main() {
 
@@ -247,7 +246,7 @@ int main() {
     soundShot.setBuffer(bufferShot);
     soundShot.setVolume(10);
 
-    Hero hero(8, 100, 80, str, 200, 1000, 0);
+    Hero hero(8, 100, str, 200, 0);
 
     hero.sprite.setTexture(texturePlayer);
 
@@ -277,7 +276,7 @@ int main() {
     axeItem.sprite.setTextureRect(sf::IntRect(0, 0, 48, 48));
     axeItem.sprite.setTexture(textureAxe);
 
-    NPC buddy(100, 20, 8, NPC::Animal, "Foffy", 0, false);
+    NPC buddy(100, 1);
     buddy.rect.setPosition(200, 400);
     buddy.sprite.setTexture(textureNPC);
 
@@ -285,31 +284,31 @@ int main() {
     std::vector<Mob> enemies;
 
     //First enemy
-    Mob darkLord(40, 8, 10, Mob::Undead, 4, 2, false);
+    Mob darkLord(40, 1, 4);
     darkLord.rect.setPosition(200, 400);
     darkLord.sprite.setTexture(textureDarkLord);
     enemies.push_back(darkLord);
 
     //Second enemy
-    Mob assassin(40, 2, 9, Mob::Samurai, 2, 1, false);
+    Mob assassin(40, 1, 2);
     assassin.rect.setPosition(300, 500);
     assassin.sprite.setTexture(textureAssassin);
     enemies.push_back(assassin);
 
     //Third enemy
-    Mob zombie(40, 2, 9, Mob::Samurai, 3, 1, false);
+    Mob zombie(40, 1, 3);
     zombie.rect.setPosition(700, 350);
     zombie.sprite.setTexture(textureZombie);
     enemies.push_back(zombie);
 
     //Fourth enemy
-    Mob chimera(40, 2, 9, Mob::Samurai, 5, 1, false);
+    Mob chimera(40, 1, 5);
     chimera.rect.setPosition(500, 550);
     chimera.sprite.setTexture(textureChimera);
     enemies.push_back(chimera);
 
     //Fifth enemy
-    Mob chaosKnight(40, 2, 9, Mob::Samurai, 10, 1, false);
+    Mob chaosKnight(40, 1, 10);
     chaosKnight.rect.setPosition(500, 200);
     chaosKnight.sprite.setTexture(textureChaos);
     enemies.push_back(chaosKnight);
@@ -527,7 +526,6 @@ int main() {
         int enemyCounter = 0;
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            hero.setHasSword(true);
             startAnimation = true;
         }
 
