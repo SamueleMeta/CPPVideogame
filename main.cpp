@@ -86,12 +86,12 @@ int main() {
         if (!texturePlayer.loadFromFile("HeroTile.png")) {
             return EXIT_FAILURE;
         }
-    } else if ( choosenCharacter == 1){
+    } else if (choosenCharacter == 1) {
         if (!texturePlayer.loadFromFile("WitchTile.png")) {
             return EXIT_FAILURE;
         }
     }
-    else if ( choosenCharacter == 2){
+    else if (choosenCharacter == 2) {
         if (!texturePlayer.loadFromFile("CoolHeroTile.png")) {
             return EXIT_FAILURE;
         }
@@ -214,7 +214,7 @@ int main() {
 
     // load scroll texture
     sf::Texture textureScroll;
-    if (!textureScroll.loadFromFile("Scrolls.png")) {
+    if (!textureScroll.loadFromFile("ScrollsSheet.png")) {
         return EXIT_FAILURE;
     }
 
@@ -225,14 +225,14 @@ int main() {
     }
 
     // Weapons
-    Weapon sword(2, "sword");
-    Weapon axe(100, "axe");
-    Weapon stick(1, "stick");
+    Weapon sword(20, "sword");
+    Weapon axe(40, "axe");
+    Weapon stick(15, "stick");
 
     // Potions
-    Potion redPotion(8);
-    Potion bluePotion(4);
-    Potion greenPotion(1);
+    Potion redPotion(8, 2);
+    Potion bluePotion(4, 4);
+    Potion greenPotion(2, 8);
 
     // Play music
     music.play();
@@ -285,7 +285,7 @@ int main() {
     std::vector<Mob> enemies;
 
     //First enemy
-    Mob darkLord(8, 8, 10, Mob::Undead, 4, 2, false);
+    Mob darkLord(40, 8, 10, Mob::Undead, 4, 2, false);
     darkLord.rect.setPosition(200, 400);
     darkLord.sprite.setTexture(textureDarkLord);
     enemies.push_back(darkLord);
@@ -381,6 +381,9 @@ int main() {
             hero.setPotion(&bluePotion);
             potionsSprite.setTextureRect(sf::IntRect(0, 280, 150, 70));
             hero.setChangeToSword(true);
+            scrollsSprite.setTextureRect(sf::IntRect(0, 480, 150, 80));
+            hero.setMoney(200);
+            hero.text.setString(std::to_string(hero.getMoney()));
             break;
         case 1:
             hero.setWeapon(&stick);
@@ -388,37 +391,57 @@ int main() {
             hero.setPotion(&redPotion);
             potionsSprite.setTextureRect(sf::IntRect(0, 420, 150, 70));
             hero.setChangeToStick(true);
+            scrollsSprite.setTextureRect(sf::IntRect(0, 480, 150, 80));
+            hero.setMoney(220);
+            hero.text.setString(std::to_string(hero.getMoney()));
             break;
         case 2:
             hero.setWeapon(&axe);
             weaponsSprite.setTextureRect(sf::IntRect(0, 228, 150, 76));
             hero.setPotion(&greenPotion);
-            potionsSprite.setTextureRect(sf::IntRect(0, 210, 150, 70));
+            potionsSprite.setTextureRect(sf::IntRect(0, 350, 150, 70));
             hero.setChangeToAxe(true);
+            scrollsSprite.setTextureRect(sf::IntRect(0, 480, 150, 80));
+            hero.setMoney(250);
+            hero.text.setString(std::to_string(hero.getMoney()));
             break;
     }
 
-    // Set Hearts and Exp sprites
+    // Set Hearts, Exp, Weapon and Potion sprites
     hero.setHeartsSprite(heartsSprite);
     hero.setExpSprite(expSprite);
     hero.setWeaponSprite(weaponsSprite);
+    hero.setPotionsSprite(potionsSprite);
 
     // Define the level with an array of tile indices
     const int levelBackground[] =
             {
-                    1044, 1044, 1044, 1044, 1052, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1054,
-                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 849, 850, 850, 850, 850, 850, 850, 850, 850, 851, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 857, 857, 857, 857, 857, 857, 857, 857, 853, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 857, 855, 855, 855, 855, 855, 855, 855, 856, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
-                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    1044, 1044, 1044, 1044, 1052, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053, 1053,
+                    1053, 1053, 1054,
+                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba, erba,
+                    erba, erba, erba, erba, erba, erba, 849, 850, 850, 850, 850, 850, 850, 850, 850, 851, erba, erba,
+                    erba,
+                    erba, erba, erba, erba, erba, erba, 852, 857, 857, 857, 857, 857, 857, 857, 857, 853, erba, erba,
+                    erba,
+                    erba, erba, erba, erba, erba, erba, 852, 857, 855, 855, 855, 855, 855, 855, 855, 856, erba, erba,
+                    erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba,
+                    erba, erba, erba, erba, erba, erba, 852, 853, erba, erba, erba, erba, erba, erba, erba, erba, erba,
+                    erba, erba,
             };
 
     // create the tilemap from the level definition
@@ -428,19 +451,32 @@ int main() {
 
     const int levelVisible[] =
             {
-                    trsp, trsp, trsp, trsp, trsp, trsp, 496, trsp, trsp, 484, trsp, trsp, 460, trsp, 497, trsp, trsp, 460, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1080, trsp, trsp, trsp, 609, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 474, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, 1081, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 514, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 563, trsp, trsp, trsp, trsp, 1110, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 603, trsp, trsp, trsp, trsp, 1109, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, 571, trsp, trsp, 839, trsp, trsp, trsp, 744, 745, 746, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 747, 748, 749, trsp, trsp, trsp, trsp,
-                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, 496, trsp, trsp, 484, trsp, trsp, 460, trsp, 497, trsp, trsp,
+                    460, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 1080, trsp, trsp, trsp, 609, trsp, trsp, trsp,
+                    trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 474,
+                    trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, 1081, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 514,
+                    trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 563, trsp, trsp, trsp, trsp, 1110, trsp, trsp,
+                    trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 603, trsp, trsp, trsp, trsp, 1109, trsp, trsp,
+                    trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, 571, trsp, trsp, 839, trsp, trsp, trsp, 744, 745, 746, trsp, trsp,
+                    trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, 747, 748, 749, trsp, trsp,
+                    trsp, trsp,
+                    trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp, trsp,
+                    trsp, trsp, trsp,
             };
 
     // create the tilemap from the level definition
@@ -452,6 +488,7 @@ int main() {
     HealthBar healthBar(&hero);
     MoneyBar moneyBar(&hero);
     WeaponBar weaponBar(&hero);
+    PotionBar potionBar(&hero);
 
     // run the main loop
     while (window.isOpen()) {
@@ -502,21 +539,14 @@ int main() {
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-            hero.setHealth(hero.getHealth() - 1);
-            if (hero.getHealth() < 1) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && hero.getPotion()->getUseTime() > 0) {
+            hero.setHealth(hero.getHealth() + hero.getPotion()->getRecovery());
+            if(hero.getHealth() > 8)
                 hero.setHealth(8);
-            }
+            hero.getPotion()->setUseTime(hero.getPotion()->getUseTime() - 1);
             hero.notify();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-            hero.setExp(hero.getExp() + 1);
-            if (hero.getExp() > 19) {
-                hero.setExp(0);
-            }
-            hero.notify();
-        }
 
         if (gameState == Playing) {
             // Weapon Animation
@@ -568,11 +598,11 @@ int main() {
             strategy.Hero_ProjectileCollisions(projectileArray, hero);
 
             // Change weapon
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::B) && hero.isChangeToSword())
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && hero.isChangeToSword())
                 hero.setWeapon(&sword);
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::N) && hero.isChangeToStick())
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::N) && hero.isChangeToStick())
                 hero.setWeapon(&stick);
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::M) && hero.isChangeToAxe())
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::M) && hero.isChangeToAxe())
                 hero.setWeapon(&axe);
 
             // Update enemies
@@ -636,7 +666,7 @@ int main() {
         for (auto itr = items.begin(); itr != items.end(); itr++) {
             if (items[counter].isTooken()) {
                 items.erase(itr);
-                hero.setMoney(hero.getMoney()+ items[counter].getValue());
+                hero.setMoney(hero.getMoney() + items[counter].getValue());
                 hero.notify();
                 break;
             }
@@ -652,7 +682,7 @@ int main() {
         window.draw(hero.getExpSprite());
         window.draw(moneySprite);
         window.draw(hero.getWeaponSprite());
-        window.draw(potionsSprite);
+        window.draw(hero.getPotionsSprite());
         window.draw(scrollsSprite);
         window.draw(name);
         window.draw(hero.text);
@@ -669,10 +699,10 @@ int main() {
 
         window.display();
 
-        /*if ( hero.getHealth() <= 0){
+        if ( hero.getHealth() <= 0){
             settings.GameOver(window);
             return 0;
-        }*/
+        }
     }
 
     return 0;

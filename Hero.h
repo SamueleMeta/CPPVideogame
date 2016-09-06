@@ -16,7 +16,10 @@ public:
         sprite.setTextureRect(sf::IntRect(counterWalking * 64, 0, 64, 64));
     }
 
-    ~Hero() { }
+    ~Hero() {
+        delete weapon;
+        delete potion;
+    }
 
     void useWeapon();
     void hit();
@@ -176,6 +179,14 @@ public:
         Hero::weaponSprite = weaponSprite;
     }
 
+    const sf::Sprite &getPotionsSprite() const {
+        return potionsSprite;
+    }
+
+    void setPotionsSprite(const sf::Sprite &potionsSprite) {
+        Hero::potionsSprite = potionsSprite;
+    }
+
 private:
     std::string name;
     int money, heroLevel, exp;
@@ -186,9 +197,9 @@ private:
     sf::Sprite heartsSprite;
     sf::Sprite expSprite;
     sf::Sprite weaponSprite;
+    sf::Sprite potionsSprite;
     Weapon* weapon;
     Potion* potion;
-    Scroll* scroll;
     bool changeToSword = false;
     bool changeToAxe = false;
     bool changeToStick = false;

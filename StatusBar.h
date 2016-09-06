@@ -62,6 +62,20 @@ private:
     Hero* subject;
 };
 
+class PotionBar : public Observer {
+public:
+    PotionBar(Hero* hero);
+
+    virtual ~PotionBar();
+
+    virtual void update() override;
+    virtual void attach() override;
+    virtual void detach() override;
+
+private:
+    Hero* subject;
+};
+
 class Item {
 public:
     Item(){};

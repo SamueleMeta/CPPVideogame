@@ -1,3 +1,4 @@
+#include <iostream>
 #include "StatusBar.h"
 
 HealthBar::HealthBar(Hero *hero) : subject(hero) {
@@ -18,8 +19,13 @@ void HealthBar::detach() {
 
 void HealthBar::update() {
     sf::Sprite tmpSprite = subject -> getHeartsSprite();
-    tmpSprite.setTextureRect(sf::IntRect(0, ( 8 - subject -> getHealth()) * 36, 150, 36));
-    subject -> setHeartsSprite(tmpSprite);
+    if(subject->getHealth() >= 8){
+        tmpSprite.setTextureRect(sf::IntRect(0, 0, 150, 36));
+        subject->setHeartsSprite(tmpSprite);
+    } else {
+        tmpSprite.setTextureRect(sf::IntRect(0, (8 - subject->getHealth()) * 36, 150, 36));
+        subject->setHeartsSprite(tmpSprite);
+    }
 }
 
 ExperienceBar::ExperienceBar(Hero *hero) : subject(hero) {
@@ -91,5 +97,30 @@ void WeaponBar::update() {
     if(!subject->isChangeToSword() && subject->isChangeToStick() && subject->isChangeToAxe())
         tmpSprite.setTextureRect(sf::IntRect(0, 532, 150, 76));
     subject -> setWeaponSprite(tmpSprite);
+}
+
+PotionBar::PotionBar(Hero *hero) : subject(hero) {
+    PotionBar::attach();
+}
+
+PotionBar::~PotionBar() {
+    PotionBar::detach();
+}
+
+void PotionBar::attach() {
+    subject->subscribe(this);
+}
+
+void PotionBar::detach() {
+    subject->unsubscribe(this);
+}
+
+void PotionBar::update() {
+    sf::Sprite tmpSprite = subject -> getPotionsSprite();
+    if(subject->getPotion()->getUseTime() <= 0) {
+        tmpSprite.setTextureRect(sf::IntRect(0, 490, 150, 70));
+        std::cout << "FINE!" << std::endl;
+    }
+    subject->setPotionsSprite(tmpSprite);
 }
 
