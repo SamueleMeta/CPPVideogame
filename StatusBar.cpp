@@ -82,13 +82,13 @@ void WeaponBar::detach() {
 
 void WeaponBar::update() {
     sf::Sprite tmpSprite = subject -> getWeaponSprite();
-    if(subject->isChangeToSword() == true && subject->isChangeToStick() == true && subject->isChangeToAxe() == true)
+    if(subject->isChangeToSword() && subject->isChangeToStick() && subject->isChangeToAxe())
         tmpSprite.setTextureRect(sf::IntRect(0, 0, 150, 76));
-    if(subject->isChangeToSword() == true && subject->isChangeToStick() == true && subject->isChangeToAxe() == false)
+    if(subject->isChangeToSword() && subject->isChangeToStick() && !subject->isChangeToAxe())
         tmpSprite.setTextureRect(sf::IntRect(0, 380, 150, 76));
-    if(subject->isChangeToSword() == true && subject->isChangeToStick() == false && subject->isChangeToAxe() == true)
+    if(subject->isChangeToSword() && !subject->isChangeToStick() && subject->isChangeToAxe())
         tmpSprite.setTextureRect(sf::IntRect(0, 456, 150, 76));
-    if(subject->isChangeToSword() == false && subject->isChangeToStick() == true && subject->isChangeToAxe() == true)
+    if(!subject->isChangeToSword() && subject->isChangeToStick() && subject->isChangeToAxe())
         tmpSprite.setTextureRect(sf::IntRect(0, 532, 150, 76));
     subject -> setWeaponSprite(tmpSprite);
 }

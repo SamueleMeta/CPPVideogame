@@ -101,7 +101,7 @@ int Settings::inputName(std::string &str, sf::Text &name, sf::RenderWindow &wind
 
 int Settings::chooseNPC(sf::RenderWindow &window, int &choose) {
     sf::Texture NPCTexture;
-    if (!NPCTexture.loadFromFile("alternativa.png")) {
+    if (!NPCTexture.loadFromFile("NPC.png")) {
         return EXIT_FAILURE;
     }
     sf::Sprite sprite(NPCTexture);
@@ -147,7 +147,7 @@ int Settings::GameOver(sf::RenderWindow &window) {
     sf::Event event;
     while (true) {
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::EventType::KeyPressed ||
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
                 event.type == sf::Event::EventType::MouseButtonPressed)
                 return 0;
         }

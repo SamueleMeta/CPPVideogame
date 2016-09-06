@@ -1,5 +1,4 @@
 #include "Projectile.h"
-#include <SFML/Graphics.hpp>
 
 Projectile::Projectile() {
     rect.setSize(sf::Vector2f(32, 32));

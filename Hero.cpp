@@ -193,8 +193,6 @@ bool Hero::checkCollision(int tile) {
             return true;
         case 571:
             return true;
-        case 839:
-            return true;
         case 563:
             return true;
         case 603:
