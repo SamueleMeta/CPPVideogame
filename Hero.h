@@ -168,8 +168,8 @@ private:
     sf::Sprite expSprite;
     sf::Sprite weaponSprite;
     sf::Sprite potionsSprite;
-    Weapon *weapon;
-    Potion *potion;
+    Weapon *weapon = nullptr;
+    Potion *potion = nullptr;
     bool changeToSword = false;
     bool changeToAxe = false;
     bool changeToStick = false;
